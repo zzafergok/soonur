@@ -7,11 +7,6 @@ import { AlertCircle, Eye, EyeOff, Minus, Plus } from 'lucide-react'
 
 import { Label } from '@/components/core/label'
 
-import { PasswordRules } from './PasswordRules'
-import { PasswordStrengthBar } from './PasswordStrengthBar'
-
-import { usePasswordStrength, PasswordRule } from '@/hooks/usePasswordStrength'
-
 import { cn } from '@/utils/utils'
 
 interface TextFieldProps {
@@ -35,7 +30,6 @@ interface TextFieldProps {
   showNumberButtons?: boolean
   showPasswordToggle?: boolean
   showPasswordStrength?: boolean
-  customPasswordRules?: PasswordRule[]
   type?: 'text' | 'email' | 'password' | 'url' | 'tel' | 'number' | 'search' | 'date' | 'time' | 'datetime-local'
 }
 
@@ -56,7 +50,6 @@ export function TextField({
   precision = 0,
   required = false,
   isPassword = false,
-  customPasswordRules,
   autoComplete = 'off',
   allowDecimal = false,
   showNumberButtons = true,
@@ -82,12 +75,6 @@ export function TextField({
 
   // Watch the field value for number inputs and password strength
   const fieldValue = watch(name)
-
-  // Password strength calculation
-  const passwordStrength = usePasswordStrength(
-    isPassword && showPasswordStrength ? (fieldValue as string) || '' : '',
-    customPasswordRules,
-  )
 
   // Sync internal value with field value for number inputs
   useEffect(() => {
@@ -297,14 +284,6 @@ export function TextField({
           </div>
         )}
       </div>
-
-      {/* Password Strength Indicator */}
-      {isPassword && showPasswordStrength && fieldValue && (
-        <div className='space-y-3 mt-3'>
-          <PasswordStrengthBar strength={passwordStrength.strength} percentage={passwordStrength.percentage} />
-          <PasswordRules rules={passwordStrength.rules} />
-        </div>
-      )}
 
       {description && !error && <p className='text-[10px] sm:text-xs text-muted-foreground'>{description}</p>}
       {error && (

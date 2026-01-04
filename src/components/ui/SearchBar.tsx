@@ -39,7 +39,7 @@ export function SearchBar({ events, placeholder = 'Etkinlik, sınav veya kategor
     <div ref={containerRef} className='w-full max-w-2xl mx-auto mb-8 relative group z-50'>
       <div className='relative'>
         <div className='absolute inset-y-0 left-4 flex items-center pointer-events-none'>
-          <Search className='h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors' />
+          <Search className='h-5 w-5 text-gray-400 group-focus-within:text-primary transition-colors' />
         </div>
 
         <input
@@ -50,7 +50,7 @@ export function SearchBar({ events, placeholder = 'Etkinlik, sınav veya kategor
             setIsOpen(true)
           }}
           onFocus={() => setIsOpen(true)}
-          className='w-full h-12 md:h-14 pl-12 pr-12 rounded-2xl bg-white border border-gray-200 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07)] hover:border-gray-300 focus:border-blue-500 transition-all outline-none text-gray-700 font-medium placeholder:text-gray-400'
+          className='w-full h-12 md:h-14 pl-12 pr-12 rounded-2xl bg-white border border-gray-200 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07)] hover:border-gray-300 focus:border-primary transition-all outline-none text-gray-700 font-medium placeholder:text-gray-400'
           placeholder={placeholder}
         />
 

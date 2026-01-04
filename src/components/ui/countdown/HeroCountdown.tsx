@@ -41,7 +41,7 @@ export function HeroCountdown({ title, targetDate, icon }: HeroCountdownProps) {
 
   return (
     <div className='w-full text-center'>
-      <div className='inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-blue-100/50 shadow-sm text-blue-600 text-xs font-bold tracking-wider mb-6'>
+      <div className='inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-primary/20 shadow-sm text-primary text-xs font-bold tracking-wider mb-6'>
         <Timer className='w-3.5 h-3.5' />
         ÖNE ÇIKAN
       </div>

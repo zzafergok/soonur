@@ -64,14 +64,14 @@ export function CountdownCard({ title, targetDate, className, color }: Countdown
           {/* Icon Box */}
           <div
             className='w-14 h-14 rounded-2xl flex items-center justify-center text-white text-2xl font-bold shadow-sm'
-            style={{ backgroundColor: color ? `${color}15` : '#eff6ff' }} // Light background
+            style={{ backgroundColor: color ? `${color}15` : 'hsl(var(--primary) / 0.1)' }} // Light background
           >
-            <span style={{ color: color || '#2563eb' }}>{title.charAt(0)}</span>
+            <span style={{ color: color || 'hsl(var(--primary))' }}>{title.charAt(0)}</span>
           </div>
 
           {/* Title & Subtitle */}
           <div>
-            <CardTitle className='font-bold text-lg text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-1 mb-1'>
+            <CardTitle className='font-bold text-lg text-gray-900 group-hover:text-primary transition-colors line-clamp-1 mb-1'>
               {title}
             </CardTitle>
             <span className='text-xs font-semibold text-gray-400 uppercase tracking-wide'>GENEL</span>
@@ -79,7 +79,7 @@ export function CountdownCard({ title, targetDate, className, color }: Countdown
         </div>
 
         {/* Arrow Button */}
-        <div className='w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300'>
+        <div className='w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             width='20'
@@ -108,7 +108,7 @@ export function CountdownCard({ title, targetDate, className, color }: Countdown
 
           <div
             className='text-sm font-bold flex items-center gap-x-1.5 whitespace-nowrap'
-            style={{ color: color || '#2563eb' }}
+            style={{ color: color || 'hsl(var(--primary))' }}
           >
             {timeLeft ? (
               <>

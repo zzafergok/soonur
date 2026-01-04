@@ -21,7 +21,7 @@ export default function Home() {
   }, [])
 
   return (
-    <div className='h-auto w-full flex flex-col items-center container mx-auto px-4 pb-8 md:pb-12'>
+    <div className='h-auto w-full flex flex-col items-center container mx-auto px-4 py-8 md:py-16'>
       {/* Background decoration */}
       <div className='absolute top-0 left-0 w-full h-[50vh] bg-gradient-to-b from-blue-50/50 to-transparent -z-10' />
 

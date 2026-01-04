@@ -34,7 +34,7 @@ const EVENT_TYPES = [
 
 type EventType = (typeof EVENT_TYPES)[number]['id']
 
-const COLORS = ['#3b82f6', '#ef4444', '#f59e0b', '#a855f7', '#6b7280'] as const
+const COLORS = ['hsl(var(--primary))', '#3b82f6', '#ef4444', '#f59e0b', '#a855f7', '#6b7280'] as const
 
 export function CountdownDrawer({
   open,
@@ -123,7 +123,7 @@ export function CountdownDrawer({
                 placeholder='Örn: KPSS 2024'
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className='pl-10 bg-gray-50 border-gray-200 focus:border-blue-500 focus:ring-blue-500/20 transition-all'
+                className='pl-10 bg-gray-50 border-gray-200 focus:border-primary transition-all'
               />
             </div>
           </div>
@@ -158,8 +158,8 @@ export function CountdownDrawer({
                     className={cn(
                       'flex items-center justify-start gap-4 p-4 h-auto rounded-xl border transition-all duration-200 group relative overflow-hidden',
                       isSelected
-                        ? 'border-blue-500 bg-blue-50 text-blue-900 ring-1 ring-blue-500 shadow-sm'
-                        : 'border-gray-200 bg-white hover:border-blue-300 hover:bg-gray-50 hover:shadow-sm text-gray-700',
+                        ? 'border-primary bg-primary text-white shadow-md'
+                        : 'border-gray-200 bg-white hover:border-primary/50 hover:bg-primary/5 hover:shadow-sm text-gray-700',
                     )}
                   >
                     <div
@@ -171,17 +171,16 @@ export function CountdownDrawer({
                       <Icon
                         className={cn(
                           'w-6 h-6 transition-colors',
-                          isSelected ? 'text-blue-600' : 'text-gray-500 group-hover:text-blue-500',
+                          isSelected ? 'text-primary' : 'text-gray-500 group-hover:text-primary',
                         )}
-                        style={isSelected ? { color: type.color } : undefined}
                       />
                     </div>
                     <div className='flex flex-col items-start gap-1'>
-                      <span className={cn('font-semibold text-base', isSelected ? 'text-blue-900' : 'text-gray-900')}>
+                      <span className={cn('font-semibold text-base', isSelected ? 'text-white' : 'text-gray-900')}>
                         {type.label}
                       </span>
                       {isSelected && (
-                        <span className='text-xs text-blue-600 font-medium animate-in fade-in slide-in-from-left-1'>
+                        <span className='text-xs text-white/90 font-medium animate-in fade-in slide-in-from-left-1'>
                           Seçildi
                         </span>
                       )}
@@ -190,8 +189,8 @@ export function CountdownDrawer({
                     {/* Selection Indicator */}
                     {isSelected && (
                       <div className='absolute right-4 top-1/2 -translate-y-1/2'>
-                        <div className='w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center animate-in zoom-in'>
-                          <Check className='w-3.5 h-3.5 text-white' />
+                        <div className='w-6 h-6 rounded-full bg-white flex items-center justify-center animate-in zoom-in'>
+                          <Check className='w-3.5 h-3.5 text-primary' />
                         </div>
                       </div>
                     )}
@@ -212,9 +211,14 @@ export function CountdownDrawer({
                   onClick={() => setColor(c)}
                   className={cn(
                     'w-10 h-10 rounded-full flex items-center justify-center transition-transform',
-                    color === c ? 'ring-2 ring-offset-2 ring-gray-400 scale-110' : 'hover:scale-105',
+                    color === c ? 'ring-2 ring-offset-2 scale-110' : 'hover:scale-105',
                   )}
-                  style={{ backgroundColor: c }}
+                  style={
+                    {
+                      backgroundColor: c,
+                      '--tw-ring-color': c,
+                    } as React.CSSProperties
+                  }
                 >
                   {color === c && <Check className='w-5 h-5 text-white' />}
                 </button>
@@ -242,7 +246,7 @@ export function CountdownDrawer({
           <Button
             type='submit'
             disabled={!isValid}
-            className='w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold'
+            className='w-full bg-primary hover:bg-primary/90 text-primary-foreground py-3 rounded-xl font-semibold'
           >
             <Check className='w-5 h-5 mr-2' />
             {editEvent ? 'Değişiklikleri Kaydet' : 'Geri Sayım Oluştur'}

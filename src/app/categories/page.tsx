@@ -29,10 +29,11 @@ import { differenceInDays, differenceInSeconds, intervalToDuration, format } fro
 import { Input } from '@/components/core/input'
 import { Button } from '@/components/core/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/core/select'
-// CountdownDrawer removed (global)
 
 import { categories, CountdownEvent, Category } from '@/data/countdown-events'
+
 import { useCustomCountdowns, CustomCountdownEvent } from '@/hooks/useCustomCountdowns'
+
 import { useCountdownDrawer } from '@/context/CountdownDrawerContext'
 
 import { cn } from '@/utils/utils'
@@ -50,17 +51,23 @@ function StatusBadge({ event }: { event: CountdownEvent }) {
     return <span className='px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-500'>GEÇMİŞ</span>
   }
   if (diff <= 7) {
-    return <span className='px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-600'>ÇOK YAKINDA</span>
+    return (
+      <span className='px-3 py-1 text-xs font-bold rounded-full bg-purple-500 text-white shadow-sm'>ÇOK YAKINDA</span>
+    )
   }
   if (diff <= 30) {
     return (
-      <span className='px-2 py-1 text-xs font-semibold rounded-full bg-orange-100 text-orange-600'>YAKLAŞIYOR</span>
+      <span className='px-3 py-1 text-xs font-bold rounded-full bg-amber-500 text-white shadow-sm'>YAKLAŞIYOR</span>
     )
   }
   if (diff <= 90) {
-    return <span className='px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-600'>STANDART</span>
+    return <span className='px-3 py-1 text-xs font-bold rounded-full bg-blue-500 text-white shadow-sm'>STANDART</span>
   }
-  return <span className='px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-600'>UZUN DÖNEM</span>
+  return (
+    <span className='px-3 py-1 text-xs font-bold rounded-full bg-primary text-primary-foreground shadow-sm'>
+      UZUN DÖNEM
+    </span>
+  )
 }
 
 // Countdown display for cards
@@ -87,7 +94,7 @@ function CountdownDisplay({ targetDate, color }: { targetDate: Date; color?: str
 
   return (
     <div className='mt-auto'>
-      <div className='text-4xl font-bold mb-1' style={{ color: color || '#2563eb' }}>
+      <div className='text-4xl font-bold mb-1' style={{ color: color || 'hsl(var(--primary))' }}>
         {days > 0 ? days : 0}
       </div>
       <div className='text-sm text-gray-500 mb-3'>Gün Kaldı</div>
@@ -100,7 +107,7 @@ function CountdownDisplay({ targetDate, color }: { targetDate: Date; color?: str
         <div className='h-2 w-full bg-gray-100 rounded-full overflow-hidden flex'>
           <div
             className='h-full rounded-l-full transition-all duration-500'
-            style={{ width: `${remainingPercent}%`, backgroundColor: color || '#2563eb' }}
+            style={{ width: `${remainingPercent}%`, backgroundColor: color || 'hsl(var(--primary))' }}
           />
           <div className='h-full rounded-r-full bg-gray-300' style={{ width: `${elapsedPercent}%` }} />
         </div>
@@ -135,12 +142,12 @@ function EventCard({
         <div className='flex items-center gap-4 flex-1 min-w-0'>
           <div
             className='w-12 h-12 rounded-xl flex items-center justify-center text-white text-lg font-bold flex-shrink-0'
-            style={{ backgroundColor: event.color || '#2563eb' }}
+            style={{ backgroundColor: event.color || 'hsl(var(--primary))' }}
           >
             {event.title.charAt(0)}
           </div>
           <div className='min-w-0 flex-1'>
-            <Link href={`/categories/${event.id}`} className='hover:text-blue-600 transition-colors'>
+            <Link href={`/categories/${event.id}`} className='hover:text-primary transition-colors'>
               <h3 className='font-semibold text-gray-900 truncate'>{event.title}</h3>
             </Link>
             <p className='text-sm text-gray-500'>{format(event.targetDate, 'd MMMM yyyy, EEEE', { locale: tr })}</p>
@@ -149,7 +156,7 @@ function EventCard({
         <div className='flex items-center gap-4'>
           <StatusBadge event={event} />
           <div className='text-right'>
-            <div className='text-2xl font-bold' style={{ color: event.color || '#2563eb' }}>
+            <div className='text-2xl font-bold' style={{ color: event.color || 'hsl(var(--primary))' }}>
               {Math.max(0, differenceInDays(event.targetDate, new Date()))}
             </div>
             <div className='text-xs text-gray-400'>Gün</div>
@@ -158,7 +165,7 @@ function EventCard({
             <div className='flex items-center gap-2'>
               <button
                 onClick={onEdit}
-                className='p-2 rounded-lg hover:bg-blue-50 text-blue-600 transition-colors'
+                className='p-2 rounded-lg hover:bg-primary/10 text-primary transition-colors'
                 title='Düzenle'
               >
                 <Edit2 className='w-4 h-4' />
@@ -174,7 +181,7 @@ function EventCard({
           )}
           <Link
             href={`/event/${event.id}`}
-            className='text-blue-600 hover:text-blue-700 font-medium text-sm flex items-center gap-1'
+            className='text-primary hover:text-primary/80 font-medium text-sm flex items-center gap-1'
           >
             Detaylar <ChevronRight className='w-4 h-4' />
           </Link>
@@ -190,7 +197,7 @@ function EventCard({
         <div className='absolute top-3 right-3 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity'>
           <button
             onClick={onEdit}
-            className='p-1.5 rounded-lg bg-white shadow-sm border border-gray-200 hover:bg-blue-50 text-blue-600 transition-colors'
+            className='p-1.5 rounded-lg bg-white shadow-sm border border-gray-200 hover:bg-primary/10 text-primary transition-colors'
             title='Düzenle'
           >
             <Edit2 className='w-3.5 h-3.5' />
@@ -212,7 +219,7 @@ function EventCard({
       </div>
 
       {/* Title */}
-      <h3 className='font-bold text-lg text-gray-900 mb-1 group-hover:text-blue-600 transition-colors line-clamp-2'>
+      <h3 className='font-bold text-lg text-gray-900 mb-1 group-hover:text-primary transition-colors line-clamp-2'>
         {event.title}
       </h3>
 
@@ -230,7 +237,7 @@ function EventCard({
         <span className='text-xs text-gray-400'>{categoryName || 'Genel'}</span>
         <Link
           href={`/categories/${event.id}`}
-          className='text-blue-600 hover:text-blue-700 font-medium text-sm flex items-center gap-1'
+          className='text-primary hover:text-primary/80 font-medium text-sm flex items-center gap-1'
         >
           Detaylar <ChevronRight className='w-4 h-4' />
         </Link>
@@ -243,8 +250,8 @@ function EventCard({
 function CategorySuggestion({ category, icon: Icon }: { category: Category; icon: LucideIcon }) {
   return (
     <div className='bg-white rounded-xl p-6 border border-gray-100 flex lg:flex-row flex-col items-center text-center w-full lg:w-auto lg:gap-4'>
-      <div className='w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center mb-3'>
-        <Icon className='w-6 h-6 text-blue-600' />
+      <div className='w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-3'>
+        <Icon className='w-6 h-6 text-primary' />
       </div>
       <h3 className='font-semibold text-gray-900 mb-1'>{category.title}</h3>
       <p className='text-xs text-gray-400'>{category.events.length} Etkinlik</p>
@@ -254,13 +261,13 @@ function CategorySuggestion({ category, icon: Icon }: { category: Category; icon
 
 export default function CategoriesPage() {
   // State
+  const [showCount, setShowCount] = useState(12)
   const [searchQuery, setSearchQuery] = useState('')
-  const [selectedCategory, setSelectedCategory] = useState<string>('all')
-  const [selectedType, setSelectedType] = useState<EventType>('all')
-  const [sortMode, setSortMode] = useState<SortMode>('date_asc')
   const [viewMode, setViewMode] = useState<ViewMode>('grid')
   const [quickFilter, setQuickFilter] = useState<string>('all')
-  const [showCount, setShowCount] = useState(12)
+  const [sortMode, setSortMode] = useState<SortMode>('date_asc')
+  const [selectedType, setSelectedType] = useState<EventType>('all')
+  const [selectedCategory, setSelectedCategory] = useState<string>('all')
 
   // Custom countdown drawer context
   const { openDrawer, openEditDrawer } = useCountdownDrawer()
@@ -365,27 +372,13 @@ export default function CategoriesPage() {
 
   return (
     <div className='min-h-screen max-w-7xl mx-auto bg-gray-50/50'>
-      {/* Breadcrumb */}
-      <div className='bg-white border-b border-gray-100'>
-        <div className='max-w-7xl mx-auto px-4 py-3'>
-          <nav className='flex items-center gap-2 text-sm'>
-            <Link href='/' className='text-gray-500 hover:text-blue-600 flex items-center gap-1'>
-              <Home className='w-4 h-4' />
-              Anasayfa
-            </Link>
-            <ChevronRight className='w-4 h-4 text-gray-300' />
-            <span className='text-gray-900 font-medium'>Kategoriler</span>
-          </nav>
-        </div>
-      </div>
-
       {/* Header */}
       <div className='bg-white border-b border-gray-100'>
         <div className='max-w-7xl mx-auto px-4 py-8'>
           <div className='flex flex-col md:flex-row md:items-center md:justify-between gap-4'>
             <div>
               <div className='flex items-center gap-3 mb-2'>
-                <div className='w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center'>
+                <div className='w-10 h-10 rounded-xl bg-primary flex items-center justify-center'>
                   <BookOpen className='w-5 h-5 text-white' />
                 </div>
                 <h1 className='text-2xl md:text-3xl font-bold text-gray-900'>Tüm Etkinlikler</h1>
@@ -395,7 +388,10 @@ export default function CategoriesPage() {
               </p>
             </div>
             {/* Create Button */}
-            <Button onClick={openDrawer} className='bg-blue-600 hover:bg-blue-700 text-white rounded-xl px-4 py-2.5'>
+            <Button
+              onClick={openDrawer}
+              className='bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl px-4 py-2.5'
+            >
               <Plus className='w-5 h-5 mr-2' />
               Geri Sayım Oluştur
             </Button>
@@ -426,7 +422,7 @@ export default function CategoriesPage() {
           <div className='p-4 bg-white rounded-xl border border-gray-200 shadow-sm flex flex-col lg:flex-row gap-4 justify-between items-start lg:items-center'>
             {/* Search Input */}
             <div className='relative w-full lg:flex-1 group'>
-              <Search className='absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-blue-600 transition-colors z-10' />
+              <Search className='absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-primary transition-colors z-10' />
               <Input
                 type='text'
                 placeholder='Kategori içinde ara...'
@@ -478,30 +474,32 @@ export default function CategoriesPage() {
               </Select>
 
               {/* View Toggle */}
-              <div className='hidden sm:flex bg-gray-50 rounded-lg p-1 border border-gray-200 h-[42px] items-center'>
+              <div className='hidden sm:flex bg-gray-50 rounded-lg p-1 border border-gray-200 h-[42px] items-center w-[104px] gap-1'>
                 <Button
                   variant='ghost'
-                  size='icon'
                   onClick={() => setViewMode('grid')}
                   className={cn(
-                    'h-full rounded aspect-square',
-                    viewMode === 'grid' && 'bg-white text-blue-600 shadow-sm ring-1 ring-black/5',
+                    'h-full flex-1 rounded-md transition-all p-0',
+                    viewMode === 'grid'
+                      ? 'bg-white text-primary shadow-sm ring-1 ring-black/5'
+                      : 'text-gray-400 hover:text-gray-600',
                   )}
                   title='Grid Görünüm'
                 >
-                  <Grid3X3 className='w-5 h-5' />
+                  <Grid3X3 className='w-4 h-4' />
                 </Button>
                 <Button
                   variant='ghost'
-                  size='icon'
                   onClick={() => setViewMode('list')}
                   className={cn(
-                    'h-full rounded aspect-square',
-                    viewMode === 'list' && 'bg-white text-blue-600 shadow-sm ring-1 ring-black/5',
+                    'h-full flex-1 rounded-md transition-all p-0',
+                    viewMode === 'list'
+                      ? 'bg-white text-primary shadow-sm ring-1 ring-black/5'
+                      : 'text-gray-400 hover:text-gray-600',
                   )}
                   title='Liste Görünüm'
                 >
-                  <List className='w-5 h-5' />
+                  <List className='w-4 h-4' />
                 </Button>
               </div>
             </div>
@@ -524,8 +522,8 @@ export default function CategoriesPage() {
                 className={cn(
                   'rounded-full text-xs',
                   quickFilter === filter.id
-                    ? 'bg-blue-600 border-blue-600 text-white hover:bg-blue-700'
-                    : 'bg-white border-gray-200 text-gray-700 hover:border-blue-500 hover:text-blue-600',
+                    ? 'bg-primary border-primary text-white shadow-md hover:bg-primary/90'
+                    : 'bg-white border-gray-200 text-gray-700 hover:border-primary hover:text-primary hover:bg-primary/5',
                 )}
               >
                 {filter.label}

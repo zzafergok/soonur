@@ -2,10 +2,11 @@
 
 import React, { useState, useMemo } from 'react'
 
-import { Calendar, ChevronLeft, ChevronRight, X } from 'lucide-react'
+import { Calendar, ChevronLeft, ChevronRight, X, Clock } from 'lucide-react'
 
 import { Button } from '@/components/core/button'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/core/popover'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/core/select'
 
 import { cn } from '@/utils/utils'
 
@@ -67,12 +68,19 @@ export function ModernDatePicker({
   // Format displayed date
   const displayValue = useMemo(() => {
     if (!value) return placeholder
-    return value.toLocaleDateString('tr-TR', {
+    const options: Intl.DateTimeFormatOptions = {
       day: 'numeric',
       month: 'long',
       year: 'numeric',
-    })
-  }, [value, placeholder])
+    }
+
+    if (includeTime) {
+      options.hour = '2-digit'
+      options.minute = '2-digit'
+    }
+
+    return value.toLocaleDateString('tr-TR', options)
+  }, [value, placeholder, includeTime])
 
   // Generate calendar days
   const calendarDays = useMemo(() => {
@@ -195,20 +203,20 @@ export function ModernDatePicker({
         className='w-auto p-0 shadow-lg border border-gray-200 dark:border-gray-700 z-[10001]'
         align='start'
       >
-        <div className='flex'>
+        <div className='flex flex-col sm:flex-row'>
           {/* Quick dates sidebar */}
           {showQuickSelect && (
-            <div className='border-r border-gray-200 dark:border-gray-700 p-3 max-w-[100px]'>
-              <div className='text-xs font-medium text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wide'>
+            <div className='border-b sm:border-b-0 sm:border-r border-gray-200 dark:border-gray-700 p-3 max-w-full sm:max-w-[100px] flex sm:flex-col gap-2 overflow-x-auto sm:overflow-visible'>
+              <div className='text-xs font-medium text-gray-500 dark:text-gray-400 mb-0 sm:mb-2 uppercase tracking-wide hidden sm:block'>
                 Hızlı Seçim
               </div>
-              <div className='space-y-1'>
+              <div className='flex sm:flex-col gap-1'>
                 {QUICK_DATES.map((quickDate, index) => (
                   <Button
                     key={index}
                     variant='ghost'
                     size='sm'
-                    className='w-full justify-start h-8 px-2 text-xs font-normal hover:bg-blue-50 dark:hover:bg-blue-900/20'
+                    className='justify-center sm:justify-start h-8 px-2 text-xs font-normal hover:bg-primary/5 dark:hover:bg-primary/20 whitespace-nowrap'
                     onClick={() => handleQuickDateSelect(quickDate)}
                   >
                     {quickDate.label}
@@ -275,29 +283,103 @@ export function ModernDatePicker({
                       !currentMonthDate && 'text-gray-300 dark:text-gray-600',
                       currentMonthDate &&
                         !selected &&
-                        'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800',
-                      selected && 'bg-blue-600 text-white hover:bg-blue-700',
+                        'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-100',
+                      selected && 'bg-primary text-primary-foreground hover:bg-primary/90',
                       today &&
                         !selected &&
-                        'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-semibold',
+                        'bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary font-semibold',
                       disabled && 'opacity-50 cursor-not-allowed',
                     )}
-                    onClick={() => !disabled && handleDateSelect(date)}
+                    onClick={() => {
+                      if (!disabled) {
+                        // Create new date preserving existing time if present, else default to 09:00 or current?
+                        // If value exists, keep its time. If not, maybe 09:00?
+                        const newDate = new Date(date)
+                        if (value && includeTime) {
+                          newDate.setHours(value.getHours(), value.getMinutes(), 0, 0)
+                        } else if (includeTime) {
+                          newDate.setHours(9, 0, 0, 0) // Default start time
+                        } else {
+                          newDate.setHours(0, 0, 0, 0)
+                        }
+
+                        onChange(newDate)
+                        if (!includeTime) {
+                          setIsOpen(false)
+                        }
+                      }
+                    }}
                     disabled={disabled}
                   >
                     {date.getDate()}
                     {today && !selected && (
-                      <div className='absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-blue-600 dark:bg-blue-400 rounded-full' />
+                      <div className='absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-primary dark:bg-primary rounded-full' />
                     )}
                   </Button>
                 )
               })}
             </div>
 
+            {/* Time Selection */}
+            {includeTime && (
+              <div className='mt-4 pt-3 border-t border-gray-100 dark:border-gray-700'>
+                <div className='flex items-center gap-2 mb-2'>
+                  <Clock className='w-4 h-4 text-gray-500' />
+                  <span className='text-xs font-semibold text-gray-500 uppercase'>Saat Seçimi</span>
+                </div>
+                <div className='flex items-center gap-2'>
+                  <Select
+                    value={value ? value.getHours().toString() : '9'}
+                    onValueChange={(val) => {
+                      const newDate = value ? new Date(value) : new Date()
+                      newDate.setHours(parseInt(val), newDate.getMinutes(), 0, 0)
+                      onChange(newDate)
+                    }}
+                  >
+                    <SelectTrigger className='h-8 w-[70px] text-xs'>
+                      <SelectValue placeholder='Saat' />
+                    </SelectTrigger>
+                    <SelectContent className='max-h-[200px]'>
+                      {Array.from({ length: 24 }).map((_, i) => (
+                        <SelectItem key={i} value={i.toString()}>
+                          {i.toString().padStart(2, '0')}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <span className='text-gray-400'>:</span>
+                  <Select
+                    value={value ? value.getMinutes().toString() : '0'}
+                    onValueChange={(val) => {
+                      const newDate = value ? new Date(value) : new Date()
+                      newDate.setHours(newDate.getHours(), parseInt(val), 0, 0)
+                      onChange(newDate)
+                    }}
+                  >
+                    <SelectTrigger className='h-8 w-[70px] text-xs'>
+                      <SelectValue placeholder='Dk' />
+                    </SelectTrigger>
+                    <SelectContent className='max-h-[200px]'>
+                      {Array.from({ length: 12 }).map((_, i) => {
+                        const m = i * 5
+                        return (
+                          <SelectItem key={m} value={m.toString()}>
+                            {m.toString().padStart(2, '0')}
+                          </SelectItem>
+                        )
+                      })}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            )}
+
             {/* Footer */}
             <div className='flex items-center justify-between mt-4 pt-3 border-t border-gray-200 dark:border-gray-700'>
               <div className='text-xs text-gray-500 dark:text-gray-400'>
-                {value ? value.toLocaleDateString('tr-TR') : 'Tarih seçilmedi'}
+                {value
+                  ? value.toLocaleDateString('tr-TR', includeTime ? { hour: '2-digit', minute: '2-digit' } : undefined)
+                  : 'Tarih seçilmedi'}
               </div>
               <Button size='sm' variant='outline' onClick={() => setIsOpen(false)} className='h-7 px-3 text-xs'>
                 Tamam

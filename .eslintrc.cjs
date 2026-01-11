@@ -53,12 +53,4 @@ module.exports = {
     JSX: 'readonly',
     React: 'readonly',
   },
-  overrides: [
-    {
-      files: ['**/*.test.{ts,tsx}', '**/*.spec.{ts,tsx}'],
-      env: {
-        jest: true,
-      },
-    },
-  ],
 }

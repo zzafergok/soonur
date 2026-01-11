@@ -48,23 +48,23 @@ function StatusBadge({ event }: { event: CountdownEvent }) {
   const diff = differenceInDays(event.targetDate, now)
 
   if (diff < 0) {
-    return <span className='px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-500'>GEÇMİŞ</span>
+    return <span className='rounded-full bg-gray-100 px-2 py-1 text-xs font-semibold text-gray-500'>GEÇMİŞ</span>
   }
   if (diff <= 7) {
     return (
-      <span className='px-3 py-1 text-xs font-bold rounded-full bg-purple-500 text-white shadow-sm'>ÇOK YAKINDA</span>
+      <span className='rounded-full bg-purple-500 px-3 py-1 text-xs font-bold text-white shadow-sm'>ÇOK YAKINDA</span>
     )
   }
   if (diff <= 30) {
     return (
-      <span className='px-3 py-1 text-xs font-bold rounded-full bg-amber-500 text-white shadow-sm'>YAKLAŞIYOR</span>
+      <span className='rounded-full bg-amber-500 px-3 py-1 text-xs font-bold text-white shadow-sm'>YAKLAŞIYOR</span>
     )
   }
   if (diff <= 90) {
-    return <span className='px-3 py-1 text-xs font-bold rounded-full bg-blue-500 text-white shadow-sm'>STANDART</span>
+    return <span className='rounded-full bg-blue-500 px-3 py-1 text-xs font-bold text-white shadow-sm'>STANDART</span>
   }
   return (
-    <span className='px-3 py-1 text-xs font-bold rounded-full bg-primary text-primary-foreground shadow-sm'>
+    <span className='rounded-full bg-primary px-3 py-1 text-xs font-bold text-primary-foreground shadow-sm'>
       UZUN DÖNEM
     </span>
   )
@@ -94,17 +94,17 @@ function CountdownDisplay({ targetDate, color }: { targetDate: Date; color?: str
 
   return (
     <div className='mt-auto'>
-      <div className='text-4xl font-bold mb-1' style={{ color: color || 'hsl(var(--primary))' }}>
+      <div className='mb-1 text-4xl font-bold' style={{ color: color || 'hsl(var(--primary))' }}>
         {days > 0 ? days : 0}
       </div>
-      <div className='text-sm text-gray-500 mb-3'>Gün Kaldı</div>
+      <div className='mb-3 text-sm text-gray-500'>Gün Kaldı</div>
       {/* Progress Bar */}
       <div className='space-y-1'>
         <div className='flex items-center justify-between text-xs text-gray-400'>
           <span>%{remainingPercent}</span>
           <span>%{elapsedPercent}</span>
         </div>
-        <div className='h-2 w-full bg-gray-100 rounded-full overflow-hidden flex'>
+        <div className='flex h-2 w-full overflow-hidden rounded-full bg-gray-100'>
           <div
             className='h-full rounded-l-full transition-all duration-500'
             style={{ width: `${remainingPercent}%`, backgroundColor: color || 'hsl(var(--primary))' }}
@@ -138,17 +138,17 @@ function EventCard({
 }) {
   if (viewMode === 'list') {
     return (
-      <div className='bg-white rounded-xl p-4 border border-gray-100 hover:shadow-md transition-all flex items-center justify-between gap-4'>
-        <div className='flex items-center gap-4 flex-1 min-w-0'>
+      <div className='flex items-center justify-between gap-4 rounded-xl border border-gray-100 bg-white p-4 transition-all hover:shadow-md'>
+        <div className='flex min-w-0 flex-1 items-center gap-4'>
           <div
-            className='w-12 h-12 rounded-xl flex items-center justify-center text-white text-lg font-bold flex-shrink-0'
+            className='flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl text-lg font-bold text-white'
             style={{ backgroundColor: event.color || 'hsl(var(--primary))' }}
           >
             {event.title.charAt(0)}
           </div>
           <div className='min-w-0 flex-1'>
-            <Link href={`/categories/${event.id}`} className='hover:text-primary transition-colors'>
-              <h3 className='font-semibold text-gray-900 truncate'>{event.title}</h3>
+            <Link href={`/categories/${event.id}`} className='transition-colors hover:text-primary'>
+              <h3 className='truncate font-semibold text-gray-900'>{event.title}</h3>
             </Link>
             <p className='text-sm text-gray-500'>{format(event.targetDate, 'd MMMM yyyy, EEEE', { locale: tr })}</p>
           </div>
@@ -165,25 +165,25 @@ function EventCard({
             <div className='flex items-center gap-2'>
               <button
                 onClick={onEdit}
-                className='p-2 rounded-lg hover:bg-primary/10 text-primary transition-colors'
+                className='rounded-lg p-2 text-primary transition-colors hover:bg-primary/10'
                 title='Düzenle'
               >
-                <Edit2 className='w-4 h-4' />
+                <Edit2 className='h-4 w-4' />
               </button>
               <button
                 onClick={onDelete}
-                className='p-2 rounded-lg hover:bg-red-50 text-red-600 transition-colors'
+                className='rounded-lg p-2 text-red-600 transition-colors hover:bg-red-50'
                 title='Sil'
               >
-                <Trash2 className='w-4 h-4' />
+                <Trash2 className='h-4 w-4' />
               </button>
             </div>
           )}
           <Link
             href={`/event/${event.id}`}
-            className='text-primary hover:text-primary/80 font-medium text-sm flex items-center gap-1'
+            className='flex items-center gap-1 text-sm font-medium text-primary hover:text-primary/80'
           >
-            Detaylar <ChevronRight className='w-4 h-4' />
+            Detaylar <ChevronRight className='h-4 w-4' />
           </Link>
         </div>
       </div>
@@ -191,41 +191,41 @@ function EventCard({
   }
 
   return (
-    <div className='bg-white rounded-2xl p-6 border border-gray-100 hover:shadow-lg transition-all duration-300 flex flex-col h-full group relative'>
+    <div className='group relative flex h-full flex-col rounded-2xl border border-gray-100 bg-white p-6 transition-all duration-300 hover:shadow-lg'>
       {/* Custom Event Actions */}
       {isCustom && (
-        <div className='absolute top-3 right-3 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity'>
+        <div className='absolute right-3 top-3 flex items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100'>
           <button
             onClick={onEdit}
-            className='p-1.5 rounded-lg bg-white shadow-sm border border-gray-200 hover:bg-primary/10 text-primary transition-colors'
+            className='rounded-lg border border-gray-200 bg-white p-1.5 text-primary shadow-sm transition-colors hover:bg-primary/10'
             title='Düzenle'
           >
-            <Edit2 className='w-3.5 h-3.5' />
+            <Edit2 className='h-3.5 w-3.5' />
           </button>
           <button
             onClick={onDelete}
-            className='p-1.5 rounded-lg bg-white shadow-sm border border-gray-200 hover:bg-red-50 text-red-600 transition-colors'
+            className='rounded-lg border border-gray-200 bg-white p-1.5 text-red-600 shadow-sm transition-colors hover:bg-red-50'
             title='Sil'
           >
-            <Trash2 className='w-3.5 h-3.5' />
+            <Trash2 className='h-3.5 w-3.5' />
           </button>
         </div>
       )}
 
       {/* Header */}
-      <div className='flex items-start justify-between mb-4'>
+      <div className='mb-4 flex items-start justify-between'>
         <StatusBadge event={event} />
-        {!isCustom && <Share2 className='w-4 h-4 text-gray-400 hover:text-gray-600 transition-colors' />}
+        {!isCustom && <Share2 className='h-4 w-4 text-gray-400 transition-colors hover:text-gray-600' />}
       </div>
 
       {/* Title */}
-      <h3 className='font-bold text-lg text-gray-900 mb-1 group-hover:text-primary transition-colors line-clamp-2'>
+      <h3 className='mb-1 line-clamp-2 text-lg font-bold text-gray-900 transition-colors group-hover:text-primary'>
         {event.title}
       </h3>
 
       {/* Date */}
-      <div className='flex items-center gap-2 text-sm text-gray-500 mb-6'>
-        <Calendar className='w-4 h-4' />
+      <div className='mb-6 flex items-center gap-2 text-sm text-gray-500'>
+        <Calendar className='h-4 w-4' />
         <span>{format(event.targetDate, 'd MMMM yyyy, EEEE', { locale: tr })}</span>
       </div>
 
@@ -233,13 +233,13 @@ function EventCard({
       <CountdownDisplay targetDate={event.targetDate} color={event.color} />
 
       {/* Footer */}
-      <div className='flex items-center justify-between mt-4 pt-4 border-t border-gray-100'>
+      <div className='mt-4 flex items-center justify-between border-t border-gray-100 pt-4'>
         <span className='text-xs text-gray-400'>{categoryName || 'Genel'}</span>
         <Link
           href={`/categories/${event.id}`}
-          className='text-primary hover:text-primary/80 font-medium text-sm flex items-center gap-1'
+          className='flex items-center gap-1 text-sm font-medium text-primary hover:text-primary/80'
         >
-          Detaylar <ChevronRight className='w-4 h-4' />
+          Detaylar <ChevronRight className='h-4 w-4' />
         </Link>
       </div>
     </div>
@@ -249,11 +249,11 @@ function EventCard({
 // Category card for suggestions (info only, no navigation)
 function CategorySuggestion({ category, icon: Icon }: { category: Category; icon: LucideIcon }) {
   return (
-    <div className='bg-white rounded-xl p-6 border border-gray-100 flex lg:flex-row flex-col items-center text-center w-full lg:w-auto lg:gap-4'>
-      <div className='w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-3'>
-        <Icon className='w-6 h-6 text-primary' />
+    <div className='flex w-full flex-col items-center rounded-xl border border-gray-100 bg-white p-6 text-center lg:w-auto lg:flex-row lg:gap-4'>
+      <div className='mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10'>
+        <Icon className='h-6 w-6 text-primary' />
       </div>
-      <h3 className='font-semibold text-gray-900 mb-1'>{category.title}</h3>
+      <h3 className='mb-1 font-semibold text-gray-900'>{category.title}</h3>
       <p className='text-xs text-gray-400'>{category.events.length} Etkinlik</p>
     </div>
   )
@@ -371,28 +371,28 @@ export default function CategoriesPage() {
   }
 
   return (
-    <div className='min-h-screen max-w-7xl mx-auto bg-gray-50/50'>
+    <div className='mx-auto min-h-screen max-w-7xl bg-gray-50/50'>
       {/* Header */}
-      <div className='bg-white border-b border-gray-100'>
-        <div className='max-w-7xl mx-auto px-4 py-8'>
-          <div className='flex flex-col md:flex-row md:items-center md:justify-between gap-4'>
+      <div className='border-b border-gray-100 bg-white'>
+        <div className='mx-auto max-w-7xl px-4 py-8'>
+          <div className='flex flex-col gap-4 md:flex-row md:items-center md:justify-between'>
             <div>
-              <div className='flex items-center gap-3 mb-2'>
-                <div className='w-10 h-10 rounded-xl bg-primary flex items-center justify-center'>
-                  <BookOpen className='w-5 h-5 text-white' />
+              <div className='mb-2 flex items-center gap-3'>
+                <div className='flex h-10 w-10 items-center justify-center rounded-xl bg-primary'>
+                  <BookOpen className='h-5 w-5 text-white' />
                 </div>
-                <h1 className='text-2xl md:text-3xl font-bold text-gray-900'>Tüm Etkinlikler</h1>
+                <h1 className='text-2xl font-bold text-gray-900 md:text-3xl'>Tüm Etkinlikler</h1>
               </div>
-              <p className='text-gray-500 max-w-2xl'>
+              <p className='max-w-2xl text-gray-500'>
                 2026 yılına ait tüm sınavlar, başvuru tarihleri, tatiller ve önemli günler için geri sayım sayaçları.
               </p>
             </div>
             {/* Create Button */}
             <Button
               onClick={openDrawer}
-              className='bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl px-4 py-2.5'
+              className='rounded-xl bg-primary px-4 py-2.5 text-primary-foreground hover:bg-primary/90'
             >
-              <Plus className='w-5 h-5 mr-2' />
+              <Plus className='mr-2 h-5 w-5' />
               Geri Sayım Oluştur
             </Button>
           </div>
@@ -400,53 +400,53 @@ export default function CategoriesPage() {
       </div>
 
       {/* Main Content */}
-      <div className='max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-10'>
+      <div className='mx-auto max-w-7xl px-4 py-6 md:px-6 md:py-10'>
         {/* Stats bar - matching reference */}
         <section className='mb-8 space-y-4'>
-          <div className='flex flex-col md:flex-row md:items-center justify-between gap-4'>
-            <h2 className='text-lg font-bold text-gray-900 flex items-center gap-3'>
+          <div className='flex flex-col justify-between gap-4 md:flex-row md:items-center'>
+            <h2 className='flex items-center gap-3 text-lg font-bold text-gray-900'>
               Tüm Etkinlikler
-              <span className='text-xs font-semibold text-gray-500 bg-gray-50 px-2.5 py-1 rounded-full border border-gray-200'>
+              <span className='rounded-full border border-gray-200 bg-gray-50 px-2.5 py-1 text-xs font-semibold text-gray-500'>
                 {filteredEvents.length} Adet
               </span>
             </h2>
             <div className='flex items-center gap-2'>
-              <span className='text-sm text-gray-500 hidden sm:flex items-center gap-1'>
-                <Clock className='w-4 h-4' />
+              <span className='hidden items-center gap-1 text-sm text-gray-500 sm:flex'>
+                <Clock className='h-4 w-4' />
                 Son güncelleme: Bugün {format(new Date(), 'HH:mm')}
               </span>
             </div>
           </div>
 
           {/* Filter Bar - matching reference exactly */}
-          <div className='p-4 bg-white rounded-xl border border-gray-200 shadow-sm flex flex-col lg:flex-row gap-4 justify-between items-start lg:items-center'>
+          <div className='flex flex-col items-start justify-between gap-4 rounded-xl border border-gray-200 bg-white p-4 shadow-sm lg:flex-row lg:items-center'>
             {/* Search Input */}
-            <div className='relative w-full lg:flex-1 group'>
-              <Search className='absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-primary transition-colors z-10' />
+            <div className='group relative w-full lg:flex-1'>
+              <Search className='absolute left-3 top-1/2 z-10 h-5 w-5 -translate-y-1/2 text-gray-400 transition-colors group-focus-within:text-primary' />
               <Input
                 type='text'
                 placeholder='Kategori içinde ara...'
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className='w-full pl-10 pr-10 py-2.5 bg-gray-50 border-gray-200 rounded-lg text-sm'
+                className='w-full rounded-lg border-gray-200 bg-gray-50 py-2.5 pl-10 pr-10 text-sm'
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
-                  className='absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 hover:text-gray-600 transition-colors z-10'
+                  className='absolute right-3 top-1/2 z-10 h-5 w-5 -translate-y-1/2 text-gray-400 transition-colors hover:text-gray-600'
                   type='button'
                 >
-                  <X className='w-5 h-5' />
+                  <X className='h-5 w-5' />
                 </button>
               )}
             </div>
 
             {/* Right side filters */}
-            <div className='flex flex-wrap items-center gap-3 w-full lg:w-auto'>
+            <div className='flex w-full flex-wrap items-center gap-3 lg:w-auto'>
               {/* Category Select */}
               <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                <SelectTrigger className='w-full sm:w-auto min-w-[160px] bg-gray-50 border-gray-200 rounded-lg text-sm font-medium'>
-                  <BookOpen className='w-4 h-4 text-gray-400 mr-2' />
+                <SelectTrigger className='w-full min-w-[160px] rounded-lg border-gray-200 bg-gray-50 text-sm font-medium sm:w-auto'>
+                  <BookOpen className='mr-2 h-4 w-4 text-gray-400' />
                   <SelectValue placeholder='Kategori: Tümü' />
                 </SelectTrigger>
                 <SelectContent>
@@ -461,8 +461,8 @@ export default function CategoriesPage() {
 
               {/* Sort Select */}
               <Select value={sortMode} onValueChange={(val) => setSortMode(val as SortMode)}>
-                <SelectTrigger className='w-full sm:w-auto min-w-[200px] bg-gray-50 border-gray-200 rounded-lg text-sm font-medium'>
-                  <Calendar className='w-4 h-4 text-gray-400 mr-2' />
+                <SelectTrigger className='w-full min-w-[200px] rounded-lg border-gray-200 bg-gray-50 text-sm font-medium sm:w-auto'>
+                  <Calendar className='mr-2 h-4 w-4 text-gray-400' />
                   <SelectValue placeholder='Sırala' />
                 </SelectTrigger>
                 <SelectContent>
@@ -474,32 +474,32 @@ export default function CategoriesPage() {
               </Select>
 
               {/* View Toggle */}
-              <div className='hidden sm:flex bg-gray-50 rounded-lg p-1 border border-gray-200 h-[42px] items-center w-[104px] gap-1'>
+              <div className='hidden h-[42px] w-[104px] items-center gap-1 rounded-lg border border-gray-200 bg-gray-50 p-1 sm:flex'>
                 <Button
                   variant='ghost'
                   onClick={() => setViewMode('grid')}
                   className={cn(
-                    'h-full flex-1 rounded-md transition-all p-0',
+                    'h-full flex-1 rounded-md p-0 transition-all',
                     viewMode === 'grid'
                       ? 'bg-white text-primary shadow-sm ring-1 ring-black/5'
                       : 'text-gray-400 hover:text-gray-600',
                   )}
                   title='Grid Görünüm'
                 >
-                  <Grid3X3 className='w-4 h-4' />
+                  <Grid3X3 className='h-4 w-4' />
                 </Button>
                 <Button
                   variant='ghost'
                   onClick={() => setViewMode('list')}
                   className={cn(
-                    'h-full flex-1 rounded-md transition-all p-0',
+                    'h-full flex-1 rounded-md p-0 transition-all',
                     viewMode === 'list'
                       ? 'bg-white text-primary shadow-sm ring-1 ring-black/5'
                       : 'text-gray-400 hover:text-gray-600',
                   )}
                   title='Liste Görünüm'
                 >
-                  <List className='w-4 h-4' />
+                  <List className='h-4 w-4' />
                 </Button>
               </div>
             </div>
@@ -522,8 +522,8 @@ export default function CategoriesPage() {
                 className={cn(
                   'rounded-full text-xs',
                   quickFilter === filter.id
-                    ? 'bg-primary border-primary text-white shadow-md hover:bg-primary/90'
-                    : 'bg-white border-gray-200 text-gray-700 hover:border-primary hover:text-primary hover:bg-primary/5',
+                    ? 'border-primary bg-primary text-white shadow-md hover:bg-primary/90'
+                    : 'border-gray-200 bg-white text-gray-700 hover:border-primary hover:bg-primary/5 hover:text-primary',
                 )}
               >
                 {filter.label}
@@ -539,7 +539,7 @@ export default function CategoriesPage() {
               className={cn(
                 'mb-8',
                 viewMode === 'grid'
-                  ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6'
+                  ? 'grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-6'
                   : 'flex flex-col gap-3',
               )}
             >
@@ -570,11 +570,11 @@ export default function CategoriesPage() {
             )}
           </>
         ) : (
-          <div className='bg-white rounded-2xl p-12 text-center'>
-            <div className='w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4'>
-              <Search className='w-8 h-8 text-gray-400' />
+          <div className='rounded-2xl bg-white p-12 text-center'>
+            <div className='mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gray-100'>
+              <Search className='h-8 w-8 text-gray-400' />
             </div>
-            <h3 className='text-lg font-semibold text-gray-900 mb-2'>Sonuç Bulunamadı</h3>
+            <h3 className='mb-2 text-lg font-semibold text-gray-900'>Sonuç Bulunamadı</h3>
             <p className='text-gray-500'>
               Arama kriterlerinize uygun etkinlik bulunamadı. Filtreleri değiştirmeyi deneyin.
             </p>
@@ -583,7 +583,7 @@ export default function CategoriesPage() {
 
         {/* Category Suggestions */}
         <div className='mt-12'>
-          <div className='w-full flex lg:flex-row flex-col justify-center gap-4'>
+          <div className='flex w-full flex-col justify-center gap-4 lg:flex-row'>
             {categories.map((cat) => (
               <CategorySuggestion key={cat.id} category={cat} icon={categoryIcons[cat.slug] || BookOpen} />
             ))}

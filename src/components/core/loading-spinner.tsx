@@ -49,10 +49,10 @@ const LoadingSpinner = React.forwardRef<HTMLDivElement, LoadingSpinnerProps>(
       {...props}
     >
       <div className={cn('relative', spinnerVariants({ size, variant }))}>
-        <div className='absolute inset-0 rounded-full bg-gradient-to-r from-current via-transparent to-current opacity-20 animate-spin' />
+        <div className='absolute inset-0 animate-spin rounded-full bg-gradient-to-r from-current via-transparent to-current opacity-20' />
         <div className='absolute inset-0 rounded-full'>
           <div
-            className='h-full w-full rounded-full border-2 border-transparent bg-gradient-to-r from-current to-transparent animate-spin'
+            className='h-full w-full animate-spin rounded-full border-2 border-transparent bg-gradient-to-r from-current to-transparent'
             style={{
               mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
               maskComposite: 'xor',
@@ -92,7 +92,7 @@ const LoadingSpinner = React.forwardRef<HTMLDivElement, LoadingSpinnerProps>(
           />
         </svg>
       </div>
-      {text && <span className='text-sm text-neutral-600 dark:text-neutral-400 animate-pulse'>{text}</span>}
+      {text && <span className='animate-pulse text-sm text-neutral-600 dark:text-neutral-400'>{text}</span>}
     </div>
   ),
 )
@@ -126,7 +126,7 @@ const LoadingDots = React.forwardRef<HTMLDivElement, LoadingSpinnerProps>(
           {[0, 1, 2].map((index) => (
             <div
               key={index}
-              className={cn('rounded-full transform-gpu', dotSizeMap[safeSize], colorMap[safeVariant])}
+              className={cn('transform-gpu rounded-full', dotSizeMap[safeSize], colorMap[safeVariant])}
               style={{
                 animation: `modernBounce 1.4s ease-in-out ${index * 0.2}s infinite`,
                 filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))',
@@ -190,7 +190,7 @@ const LoadingPulse = React.forwardRef<HTMLDivElement, LoadingSpinnerProps>(
           />
           {/* Inner highlight */}
           <div
-            className={cn('absolute top-1/4 left-1/4 rounded-full bg-white opacity-40', {
+            className={cn('absolute left-1/4 top-1/4 rounded-full bg-white opacity-40', {
               'h-1.5 w-1.5': safeSize === 'xs',
               'h-2 w-2': safeSize === 'sm',
               'h-3 w-3': safeSize === 'md',

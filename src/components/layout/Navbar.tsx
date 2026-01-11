@@ -19,59 +19,59 @@ export function Navbar() {
 
   return (
     <>
-      <div className='w-full flex justify-center py-4 md:py-6 z-[100] px-4 sticky top-0'>
-        <nav className='bg-white/80 backdrop-blur-md border border-white/20 shadow-lg rounded-full px-4 py-3 md:px-6 md:py-3 flex items-center justify-between w-full max-w-2xl relative transition-all duration-300'>
+      <div className='sticky top-0 z-[100] flex w-full justify-center px-4 py-4 md:py-6'>
+        <nav className='relative flex w-full max-w-2xl items-center justify-between rounded-full border border-white/20 bg-white/80 px-4 py-3 shadow-lg backdrop-blur-md transition-all duration-300 md:px-6 md:py-3'>
           {/* Logo */}
-          <Link href='/' className='flex items-center gap-2 z-10'>
-            <div className='w-8 h-8 bg-primary rounded-full flex items-center justify-center shadow-sm'>
-              <Timer className='w-4 h-4 text-white' />
+          <Link href='/' className='z-10 flex items-center gap-2'>
+            <div className='flex h-8 w-8 items-center justify-center rounded-full bg-primary shadow-sm'>
+              <Timer className='h-4 w-4 text-white' />
             </div>
-            <span className='font-bold text-lg text-gray-900 tracking-tight block'>Soonur</span>
+            <span className='block text-lg font-bold tracking-tight text-gray-900'>Soonur</span>
           </Link>
 
           {/* Desktop Menu */}
-          <div className='hidden md:flex items-center gap-4'>
-            <Link href='/categories' className='text-sm font-medium text-gray-600 hover:text-primary transition-colors'>
+          <div className='hidden items-center gap-4 md:flex'>
+            <Link href='/categories' className='text-sm font-medium text-gray-600 transition-colors hover:text-primary'>
               Tüm Etkinlikler
             </Link>
             <Button
               size='sm'
               onClick={openDrawer}
-              className='bg-primary hover:bg-primary/90 text-white rounded-full px-6'
+              className='rounded-full bg-primary px-6 text-white hover:bg-primary/90'
             >
               Geri Sayım Oluştur
             </Button>
           </div>
 
           {/* Mobile Actions */}
-          <div className='flex items-center gap-2 md:hidden z-10'>
+          <div className='z-10 flex items-center gap-2 md:hidden'>
             <Button
               size='sm'
               onClick={openDrawer}
-              className='bg-primary hover:bg-primary/90 text-white rounded-full px-3 h-8 text-xs'
+              className='h-8 rounded-full bg-primary px-3 text-xs text-white hover:bg-primary/90'
             >
-              <Plus className='w-4 h-4' />
+              <Plus className='h-4 w-4' />
               <span className='ml-1 hidden sm:inline'>Oluştur</span>
             </Button>
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className='p-2 text-gray-600 hover:text-gray-900 focus:outline-none'
             >
-              {isMobileMenuOpen ? <X className='w-5 h-5' /> : <Menu className='w-5 h-5' />}
+              {isMobileMenuOpen ? <X className='h-5 w-5' /> : <Menu className='h-5 w-5' />}
             </button>
           </div>
 
           {/* Mobile Dropdown Menu */}
           {isMobileMenuOpen && (
-            <div className='absolute top-full left-0 right-0 mt-2 bg-white border border-gray-100 rounded-2xl shadow-xl overflow-hidden animate-in slide-in-from-top-2 flex flex-col p-2 gap-1 z-20'>
+            <div className='animate-in slide-in-from-top-2 absolute left-0 right-0 top-full z-20 mt-2 flex flex-col gap-1 overflow-hidden rounded-2xl border border-gray-100 bg-white p-2 shadow-xl'>
               {pathname !== '/' && (
                 <Link
                   href='/'
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className='flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 text-gray-700 font-medium transition-colors'
+                  className='flex items-center gap-3 rounded-xl px-4 py-3 font-medium text-gray-700 transition-colors hover:bg-gray-50'
                 >
-                  <div className='w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center'>
-                    <Timer className='w-4 h-4 text-primary' />
+                  <div className='flex h-8 w-8 items-center justify-center rounded-full bg-primary/10'>
+                    <Timer className='h-4 w-4 text-primary' />
                   </div>
                   Anasayfa
                 </Link>
@@ -79,10 +79,10 @@ export function Navbar() {
               <Link
                 href='/categories'
                 onClick={() => setIsMobileMenuOpen(false)}
-                className='flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 text-gray-700 font-medium transition-colors'
+                className='flex items-center gap-3 rounded-xl px-4 py-3 font-medium text-gray-700 transition-colors hover:bg-gray-50'
               >
-                <div className='w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center'>
-                  <Menu className='w-4 h-4 text-primary' />
+                <div className='flex h-8 w-8 items-center justify-center rounded-full bg-primary/10'>
+                  <Menu className='h-4 w-4 text-primary' />
                 </div>
                 Tüm Etkinlikler
               </Link>
@@ -94,7 +94,7 @@ export function Navbar() {
       {/* Mobile Menu Backdrop */}
       {isMobileMenuOpen && (
         <div
-          className='fixed inset-0 bg-black/20 z-[90] md:hidden backdrop-blur-sm animate-in fade-in'
+          className='animate-in fade-in fixed inset-0 z-[90] bg-black/20 backdrop-blur-sm md:hidden'
           onClick={() => setIsMobileMenuOpen(false)}
         />
       )}

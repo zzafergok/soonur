@@ -120,7 +120,7 @@ const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
               >
                 <div
                   className={cn(
-                    'absolute right-0 w-2 bg-border/30 rounded-full transition-all duration-200 hover:bg-border/50',
+                    'absolute right-0 w-2 rounded-full bg-border/30 transition-all duration-200 hover:bg-border/50',
                     scrollbarClassName,
                   )}
                   style={{
@@ -130,7 +130,7 @@ const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
                 >
                   <div
                     className={cn(
-                      'w-full h-full bg-foreground/20 rounded-full transition-colors duration-200 hover:bg-foreground/30',
+                      'h-full w-full rounded-full bg-foreground/20 transition-colors duration-200 hover:bg-foreground/30',
                       thumbClassName,
                     )}
                   />
@@ -142,14 +142,14 @@ const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
             {showHorizontalScrollbar && (
               <div
                 className={cn(
-                  'absolute bottom-0 left-0 z-10 w-full h-2 transition-opacity duration-300',
+                  'absolute bottom-0 left-0 z-10 h-2 w-full transition-opacity duration-300',
                   fadeScrollbar && !isScrolling ? 'opacity-0' : 'opacity-100',
                   trackClassName,
                 )}
               >
                 <div
                   className={cn(
-                    'absolute bottom-0 h-2 bg-border/30 rounded-full transition-all duration-200 hover:bg-border/50',
+                    'absolute bottom-0 h-2 rounded-full bg-border/30 transition-all duration-200 hover:bg-border/50',
                     scrollbarClassName,
                   )}
                   style={{
@@ -159,7 +159,7 @@ const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(
                 >
                   <div
                     className={cn(
-                      'w-full h-full bg-foreground/20 rounded-full transition-colors duration-200 hover:bg-foreground/30',
+                      'h-full w-full rounded-full bg-foreground/20 transition-colors duration-200 hover:bg-foreground/30',
                       thumbClassName,
                     )}
                   />

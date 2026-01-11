@@ -66,7 +66,7 @@ export function SkipLink({ href, children }: SkipLinkProps) {
   return (
     <a
       href={href}
-      className='sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground focus:outline-none'
+      className='sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground focus:outline-none'
     >
       {children}
     </a>
@@ -114,7 +114,7 @@ export const AccessibleListItem = forwardRef<HTMLLIElement, AccessibleListItemPr
         aria-selected={selected}
         aria-disabled={disabled}
         aria-level={level}
-        className={cn('outline-none', disabled && 'opacity-50 cursor-not-allowed', className)}
+        className={cn('outline-none', disabled && 'cursor-not-allowed opacity-50', className)}
         {...props}
       >
         {children}

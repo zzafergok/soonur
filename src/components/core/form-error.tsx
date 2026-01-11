@@ -13,7 +13,7 @@ export function FormError({ message, className }: FormErrorProps) {
   if (!message) return null
 
   return (
-    <div className={cn('flex items-center gap-2 mt-1 text-sm text-destructive', className)}>
+    <div className={cn('mt-1 flex items-center gap-2 text-sm text-destructive', className)}>
       <AlertCircle className='h-3 w-3 flex-shrink-0' />
       <span>{message}</span>
     </div>

@@ -20,13 +20,13 @@ const Checkbox = React.forwardRef<
       // Light mode styles
       'border-neutral-300 bg-white text-white',
       'hover:border-neutral-400 hover:bg-neutral-50',
-      'data-[state=checked]:bg-primary-500 data-[state=checked]:border-primary-500',
+      'data-[state=checked]:border-primary-500 data-[state=checked]:bg-primary-500',
       'data-[state=checked]:text-white',
       // Dark mode styles
       'dark:border-neutral-600 dark:bg-neutral-900 dark:text-white',
       'dark:hover:border-neutral-500 dark:hover:bg-neutral-800',
       'dark:focus-visible:outline-none',
-      'dark:data-[state=checked]:bg-primary-600 dark:data-[state=checked]:border-primary-600',
+      'dark:data-[state=checked]:border-primary-600 dark:data-[state=checked]:bg-primary-600',
       'dark:data-[state=checked]:text-white',
       className,
     )}

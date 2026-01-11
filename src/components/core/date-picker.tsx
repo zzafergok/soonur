@@ -388,14 +388,14 @@ export function DatePicker({
 
   // Render calendar header
   const renderCalendarHeader = () => (
-    <div className='flex items-center justify-between p-3 border-b border-neutral-200 dark:border-neutral-700'>
+    <div className='flex items-center justify-between border-b border-neutral-200 p-3 dark:border-neutral-700'>
       <div className='flex items-center gap-1'>
         <Button variant='ghost' size='sm' className='h-8 w-8 p-0' onClick={goToPreviousYear}>
-          <ChevronLeft className='w-4 h-4' />
-          <ChevronLeft className='w-4 h-4 -ml-2' />
+          <ChevronLeft className='h-4 w-4' />
+          <ChevronLeft className='-ml-2 h-4 w-4' />
         </Button>
         <Button variant='ghost' size='sm' className='h-8 w-8 p-0' onClick={goToPreviousMonth}>
-          <ChevronLeft className='w-4 h-4' />
+          <ChevronLeft className='h-4 w-4' />
         </Button>
       </div>
 
@@ -403,11 +403,11 @@ export function DatePicker({
 
       <div className='flex items-center gap-1'>
         <Button variant='ghost' size='sm' className='h-8 w-8 p-0' onClick={goToNextMonth}>
-          <ChevronRight className='w-4 h-4' />
+          <ChevronRight className='h-4 w-4' />
         </Button>
         <Button variant='ghost' size='sm' className='h-8 w-8 p-0' onClick={goToNextYear}>
-          <ChevronRight className='w-4 h-4' />
-          <ChevronRight className='w-4 h-4 -ml-2' />
+          <ChevronRight className='h-4 w-4' />
+          <ChevronRight className='-ml-2 h-4 w-4' />
         </Button>
       </div>
     </div>
@@ -421,7 +421,7 @@ export function DatePicker({
     for (let i = 0; i < 7; i++) {
       const day = addDays(start, i)
       weekDays.push(
-        <div key={i} className='text-center text-sm font-medium text-neutral-500 dark:text-neutral-400 p-2'>
+        <div key={i} className='p-2 text-center text-sm font-medium text-neutral-500 dark:text-neutral-400'>
           {format(day, 'EEE', { locale: dateLocale })}
         </div>,
       )
@@ -430,7 +430,7 @@ export function DatePicker({
     return (
       <div className={cn('grid grid-cols-7', showWeekNumbers && 'grid-cols-8')}>
         {showWeekNumbers && (
-          <div className='text-center text-sm font-medium text-neutral-500 dark:text-neutral-400 p-2'>#</div>
+          <div className='p-2 text-center text-sm font-medium text-neutral-500 dark:text-neutral-400'>#</div>
         )}
         {weekDays}
       </div>
@@ -446,7 +446,7 @@ export function DatePicker({
       if (showWeekNumbers && index % 7 === 0) {
         // Add week number
         week.push(
-          <div key={`week-${index}`} className='text-center text-sm text-neutral-400 p-2'>
+          <div key={`week-${index}`} className='p-2 text-center text-sm text-neutral-400'>
             {format(day, 'w')}
           </div>,
         )
@@ -465,22 +465,22 @@ export function DatePicker({
           onClick={() => handleDateSelect(day)}
           disabled={isDisabled}
           className={cn(
-            'relative w-10 h-10 text-sm rounded-md transition-colors',
+            'relative h-10 w-10 rounded-md text-sm transition-colors',
             'hover:bg-neutral-100 dark:hover:bg-neutral-700',
-            'focus:outline-none focus:ring-1 focus:ring-primary/50 focus:ring-inset',
+            'focus:outline-none focus:ring-1 focus:ring-inset focus:ring-primary/50',
             !isCurrentMonth && 'text-neutral-300 dark:text-neutral-600',
             isCurrentMonth && 'text-neutral-900 dark:text-neutral-100',
-            isTodayDate && !isSelected && 'bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300',
+            isTodayDate && !isSelected && 'bg-primary-100 text-primary-700 dark:bg-primary-900 dark:text-primary-300',
             isSelected && 'bg-primary-500 text-white',
             isRangeStartDate && 'rounded-r-none',
             isRangeEndDate && 'rounded-l-none',
             isSelected && mode === 'range' && !isRangeStartDate && !isRangeEndDate && 'rounded-none',
-            isDisabled && 'opacity-50 cursor-not-allowed hover:bg-transparent',
+            isDisabled && 'cursor-not-allowed opacity-50 hover:bg-transparent',
           )}
         >
           {format(day, 'd')}
           {isTodayDate && !isSelected && (
-            <div className='absolute bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-primary-500 rounded-full' />
+            <div className='absolute bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 transform rounded-full bg-primary-500' />
           )}
         </button>,
       )
@@ -509,9 +509,9 @@ export function DatePicker({
     const minutes = Array.from({ length: 60 }, (_, i) => i)
 
     return (
-      <div className='border-t border-neutral-200 dark:border-neutral-700 p-3'>
-        <div className='flex items-center gap-2 mb-3'>
-          <Clock className='w-4 h-4 text-neutral-500' />
+      <div className='border-t border-neutral-200 p-3 dark:border-neutral-700'>
+        <div className='mb-3 flex items-center gap-2'>
+          <Clock className='h-4 w-4 text-neutral-500' />
           <span className='text-sm font-medium'>Saat</span>
         </div>
 
@@ -555,8 +555,8 @@ export function DatePicker({
 
         {enableTimezone && (
           <div className='mt-3'>
-            <div className='flex items-center gap-2 mb-2'>
-              <Globe className='w-4 h-4 text-neutral-500' />
+            <div className='mb-2 flex items-center gap-2'>
+              <Globe className='h-4 w-4 text-neutral-500' />
               <span className='text-sm font-medium'>Zaman Dilimi</span>
             </div>
             <Select value={selectedTimezone} onValueChange={setSelectedTimezone}>
@@ -582,15 +582,15 @@ export function DatePicker({
     if (!enablePresets || !presets.length) return null
 
     return (
-      <div className='border-r border-neutral-200 dark:border-neutral-700 w-48 p-3'>
-        <div className='text-sm font-medium mb-3 text-neutral-700 dark:text-neutral-300'>Hızlı Seçim</div>
+      <div className='w-48 border-r border-neutral-200 p-3 dark:border-neutral-700'>
+        <div className='mb-3 text-sm font-medium text-neutral-700 dark:text-neutral-300'>Hızlı Seçim</div>
         <div className='space-y-1'>
           {presets.map((preset, index) => (
             <Button
               key={index}
               variant='ghost'
               size='sm'
-              className='w-full justify-start h-8 px-2'
+              className='h-8 w-full justify-start px-2'
               onClick={() => handlePresetSelect(preset.value)}
             >
               {preset.label}
@@ -603,7 +603,7 @@ export function DatePicker({
 
   // Render footer
   const renderFooter = () => (
-    <div className='border-t border-neutral-200 dark:border-neutral-700 p-3 flex items-center justify-between'>
+    <div className='flex items-center justify-between border-t border-neutral-200 p-3 dark:border-neutral-700'>
       <div className='text-sm text-neutral-500 dark:text-neutral-400'>
         {mode === 'multiple' && Array.isArray(value) && <span>{value.length} tarih seçildi</span>}
         {mode === 'range' && value && typeof value === 'object' && 'from' in value && (
@@ -701,7 +701,7 @@ export function DatePickerExample() {
   return (
     <div className='space-y-6 p-6'>
       <div>
-        <label className='block text-sm font-medium mb-2'>Tek Tarih</label>
+        <label className='mb-2 block text-sm font-medium'>Tek Tarih</label>
         <DatePicker
           mode='single'
           value={singleDate}
@@ -711,7 +711,7 @@ export function DatePickerExample() {
       </div>
 
       <div>
-        <label className='block text-sm font-medium mb-2'>Tarih Aralığı</label>
+        <label className='mb-2 block text-sm font-medium'>Tarih Aralığı</label>
         <DatePicker
           mode='range'
           value={dateRange}
@@ -722,7 +722,7 @@ export function DatePickerExample() {
       </div>
 
       <div>
-        <label className='block text-sm font-medium mb-2'>Çoklu Tarih</label>
+        <label className='mb-2 block text-sm font-medium'>Çoklu Tarih</label>
         <DatePicker
           mode='multiple'
           value={multipleDates}
@@ -732,7 +732,7 @@ export function DatePickerExample() {
       </div>
 
       <div>
-        <label className='block text-sm font-medium mb-2'>Tarih ve Saat</label>
+        <label className='mb-2 block text-sm font-medium'>Tarih ve Saat</label>
         <DatePicker
           mode='single'
           enableTime={true}

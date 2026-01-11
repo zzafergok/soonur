@@ -197,10 +197,10 @@ const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
               onClick={decrement}
               disabled={disabled || (min !== undefined && value !== undefined && value <= min)}
               className={cn(
-                'h-8 w-8 rounded-md flex items-center justify-center',
+                'flex h-8 w-8 items-center justify-center rounded-md',
                 'bg-muted hover:bg-muted/80 active:bg-muted/60',
                 'transition-colors duration-150',
-                'disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-muted',
+                'disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-muted',
                 'focus-visible:outline-none',
               )}
               aria-label='Decrement'
@@ -212,10 +212,10 @@ const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
               onClick={increment}
               disabled={disabled || (max !== undefined && value !== undefined && value >= max)}
               className={cn(
-                'h-8 w-8 rounded-md flex items-center justify-center',
+                'flex h-8 w-8 items-center justify-center rounded-md',
                 'bg-muted hover:bg-muted/80 active:bg-muted/60',
                 'transition-colors duration-150',
-                'disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-muted',
+                'disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-muted',
                 'focus-visible:outline-none',
               )}
               aria-label='Increment'

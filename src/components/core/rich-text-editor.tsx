@@ -427,13 +427,13 @@ export function RichTextEditor({
     if (!enableToolbar) return null
 
     return (
-      <div className='flex items-center gap-1 p-2 border-b border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 flex-wrap'>
+      <div className='flex flex-wrap items-center gap-1 border-b border-neutral-200 bg-neutral-50 p-2 dark:border-neutral-700 dark:bg-neutral-800'>
         {/* Formatting */}
         {toolbarConfig.formatting && (
           <>
             <div className='flex items-center gap-1'>
               <Select defaultValue='Arial, sans-serif' onValueChange={(value) => formatText('fontName', value)}>
-                <SelectTrigger className='w-32 h-8'>
+                <SelectTrigger className='h-8 w-32'>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -446,7 +446,7 @@ export function RichTextEditor({
               </Select>
 
               <Select defaultValue='16px' onValueChange={(value) => formatText('fontSize', value)}>
-                <SelectTrigger className='w-16 h-8'>
+                <SelectTrigger className='h-8 w-16'>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -463,16 +463,16 @@ export function RichTextEditor({
 
             <div className='flex items-center gap-1'>
               <Button variant='ghost' size='sm' className='h-8 w-8 p-0' onClick={() => formatText('bold')}>
-                <Bold className='w-4 h-4' />
+                <Bold className='h-4 w-4' />
               </Button>
               <Button variant='ghost' size='sm' className='h-8 w-8 p-0' onClick={() => formatText('italic')}>
-                <Italic className='w-4 h-4' />
+                <Italic className='h-4 w-4' />
               </Button>
               <Button variant='ghost' size='sm' className='h-8 w-8 p-0' onClick={() => formatText('underline')}>
-                <Underline className='w-4 h-4' />
+                <Underline className='h-4 w-4' />
               </Button>
               <Button variant='ghost' size='sm' className='h-8 w-8 p-0' onClick={() => formatText('strikeThrough')}>
-                <Strikethrough className='w-4 h-4' />
+                <Strikethrough className='h-4 w-4' />
               </Button>
             </div>
 
@@ -482,7 +482,7 @@ export function RichTextEditor({
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant='ghost' size='sm' className='h-8 w-8 p-0'>
-                    <Palette className='w-4 h-4' />
+                    <Palette className='h-4 w-4' />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
@@ -491,7 +491,7 @@ export function RichTextEditor({
                     {colors.map((color) => (
                       <button
                         key={color}
-                        className='w-6 h-6 rounded border border-neutral-300 hover:scale-110 transition-transform'
+                        className='h-6 w-6 rounded border border-neutral-300 transition-transform hover:scale-110'
                         style={{ backgroundColor: color }}
                         onClick={() => formatText('foreColor', color)}
                       />
@@ -503,7 +503,7 @@ export function RichTextEditor({
                     {colors.map((color) => (
                       <button
                         key={color}
-                        className='w-6 h-6 rounded border border-neutral-300 hover:scale-110 transition-transform'
+                        className='h-6 w-6 rounded border border-neutral-300 transition-transform hover:scale-110'
                         style={{ backgroundColor: color }}
                         onClick={() => formatText('backColor', color)}
                       />
@@ -521,16 +521,16 @@ export function RichTextEditor({
             <Separator orientation='vertical' className='h-6' />
             <div className='flex items-center gap-1'>
               <Button variant='ghost' size='sm' className='h-8 w-8 p-0' onClick={() => formatText('justifyLeft')}>
-                <AlignLeft className='w-4 h-4' />
+                <AlignLeft className='h-4 w-4' />
               </Button>
               <Button variant='ghost' size='sm' className='h-8 w-8 p-0' onClick={() => formatText('justifyCenter')}>
-                <AlignCenter className='w-4 h-4' />
+                <AlignCenter className='h-4 w-4' />
               </Button>
               <Button variant='ghost' size='sm' className='h-8 w-8 p-0' onClick={() => formatText('justifyRight')}>
-                <AlignRight className='w-4 h-4' />
+                <AlignRight className='h-4 w-4' />
               </Button>
               <Button variant='ghost' size='sm' className='h-8 w-8 p-0' onClick={() => formatText('justifyFull')}>
-                <AlignJustify className='w-4 h-4' />
+                <AlignJustify className='h-4 w-4' />
               </Button>
             </div>
           </>
@@ -547,10 +547,10 @@ export function RichTextEditor({
                 className='h-8 w-8 p-0'
                 onClick={() => formatText('insertUnorderedList')}
               >
-                <List className='w-4 h-4' />
+                <List className='h-4 w-4' />
               </Button>
               <Button variant='ghost' size='sm' className='h-8 w-8 p-0' onClick={() => formatText('insertOrderedList')}>
-                <ListOrdered className='w-4 h-4' />
+                <ListOrdered className='h-4 w-4' />
               </Button>
               <Button
                 variant='ghost'
@@ -558,7 +558,7 @@ export function RichTextEditor({
                 className='h-8 w-8 p-0'
                 onClick={() => formatText('formatBlock', 'blockquote')}
               >
-                <Quote className='w-4 h-4' />
+                <Quote className='h-4 w-4' />
               </Button>
               <Button
                 variant='ghost'
@@ -566,7 +566,7 @@ export function RichTextEditor({
                 className='h-8 w-8 p-0'
                 onClick={() => formatText('formatBlock', 'pre')}
               >
-                <Code className='w-4 h-4' />
+                <Code className='h-4 w-4' />
               </Button>
             </div>
           </>
@@ -579,7 +579,7 @@ export function RichTextEditor({
             <div className='flex items-center gap-1'>
               {toolbarConfig.links && (
                 <Button variant='ghost' size='sm' className='h-8 w-8 p-0' onClick={() => setShowLinkDialog(true)}>
-                  <Link className='w-4 h-4' />
+                  <Link className='h-4 w-4' />
                 </Button>
               )}
 
@@ -591,7 +591,7 @@ export function RichTextEditor({
                     className='h-8 w-8 p-0'
                     onClick={() => fileInputRef.current?.click()}
                   >
-                    <Image className='w-4 h-4' />
+                    <Image className='h-4 w-4' />
                   </Button>
                   <Button
                     variant='ghost'
@@ -599,7 +599,7 @@ export function RichTextEditor({
                     className='h-8 w-8 p-0'
                     onClick={() => fileInputRef.current?.click()}
                   >
-                    <Video className='w-4 h-4' />
+                    <Video className='h-4 w-4' />
                   </Button>
                 </>
               )}
@@ -612,7 +612,7 @@ export function RichTextEditor({
           <>
             <Separator orientation='vertical' className='h-6' />
             <Button variant='ghost' size='sm' className='h-8 w-8 p-0' onClick={() => setShowTableDialog(true)}>
-              <Table className='w-4 h-4' />
+              <Table className='h-4 w-4' />
             </Button>
           </>
         )}
@@ -623,10 +623,10 @@ export function RichTextEditor({
             <Separator orientation='vertical' className='h-6' />
             <div className='flex items-center gap-1'>
               <Button variant='ghost' size='sm' className='h-8 w-8 p-0' onClick={() => formatText('undo')}>
-                <Undo className='w-4 h-4' />
+                <Undo className='h-4 w-4' />
               </Button>
               <Button variant='ghost' size='sm' className='h-8 w-8 p-0' onClick={() => formatText('redo')}>
-                <Redo className='w-4 h-4' />
+                <Redo className='h-4 w-4' />
               </Button>
             </div>
           </>
@@ -641,14 +641,14 @@ export function RichTextEditor({
               className='h-8'
               onClick={() => setIsPreviewMode(!isPreviewMode)}
             >
-              {isPreviewMode ? <Edit className='w-4 h-4 mr-1' /> : <Eye className='w-4 h-4 mr-1' />}
+              {isPreviewMode ? <Edit className='mr-1 h-4 w-4' /> : <Eye className='mr-1 h-4 w-4' />}
               {isPreviewMode ? 'Düzenle' : 'Önizle'}
             </Button>
           )}
 
           {enableFullscreen && (
             <Button variant='ghost' size='sm' className='h-8 w-8 p-0' onClick={toggleFullscreen}>
-              {isFullscreen ? <X className='w-4 h-4' /> : <Type className='w-4 h-4' />}
+              {isFullscreen ? <X className='h-4 w-4' /> : <Type className='h-4 w-4' />}
             </Button>
           )}
         </div>
@@ -661,7 +661,7 @@ export function RichTextEditor({
     if (!enableWordCount && !enableAutoSave) return null
 
     return (
-      <div className='flex items-center justify-between p-2 border-t border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-sm text-neutral-600 dark:text-neutral-400'>
+      <div className='flex items-center justify-between border-t border-neutral-200 bg-neutral-50 p-2 text-sm text-neutral-600 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-400'>
         <div className='flex items-center gap-4'>
           {enableWordCount && (
             <>
@@ -674,7 +674,7 @@ export function RichTextEditor({
 
         {enableAutoSave && lastSaved && (
           <div className='flex items-center gap-2'>
-            <Save className='w-4 h-4' />
+            <Save className='h-4 w-4' />
             <span>Son kaydedilen: {lastSaved.toLocaleTimeString()}</span>
           </div>
         )}
@@ -686,9 +686,9 @@ export function RichTextEditor({
     <>
       <div
         className={cn(
-          'border border-neutral-200 dark:border-neutral-700 rounded-lg overflow-hidden bg-white dark:bg-neutral-900',
+          'overflow-hidden rounded-lg border border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900',
           isFullscreen && 'fixed inset-0 z-50 rounded-none',
-          disabled && 'opacity-50 pointer-events-none',
+          disabled && 'pointer-events-none opacity-50',
           className,
         )}
       >
@@ -699,7 +699,7 @@ export function RichTextEditor({
         <div className='relative'>
           {isPreviewMode ? (
             <div
-              className='p-4 prose prose-neutral dark:prose-invert max-w-none'
+              className='prose prose-neutral dark:prose-invert max-w-none p-4'
               style={{ height: typeof height === 'number' ? `${height}px` : height }}
               dangerouslySetInnerHTML={{ __html: content }}
             />
@@ -708,7 +708,7 @@ export function RichTextEditor({
               ref={editorRef}
               contentEditable={!readOnly && !disabled}
               className={cn(
-                'p-4 outline-none overflow-y-auto resize-none',
+                'resize-none overflow-y-auto p-4 outline-none',
                 'prose prose-neutral dark:prose-invert max-w-none',
               )}
               style={{
@@ -726,7 +726,7 @@ export function RichTextEditor({
 
           {/* Placeholder */}
           {!content && !isPreviewMode && (
-            <div className='absolute top-4 left-4 text-neutral-400 dark:text-neutral-500 pointer-events-none'>
+            <div className='pointer-events-none absolute left-4 top-4 text-neutral-400 dark:text-neutral-500'>
               {placeholder}
             </div>
           )}

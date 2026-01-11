@@ -94,7 +94,7 @@ export function Calendar({ mode: _mode = 'single', selected, onSelect, disabled,
   return (
     <div className={cn('p-3', className)}>
       {/* Header */}
-      <div className='flex items-center justify-between mb-4'>
+      <div className='mb-4 flex items-center justify-between'>
         <Button variant='ghost' size='icon' onClick={handlePreviousMonth} className='h-7 w-7'>
           <ChevronLeft className='h-4 w-4' />
         </Button>
@@ -107,11 +107,11 @@ export function Calendar({ mode: _mode = 'single', selected, onSelect, disabled,
       </div>
 
       {/* Days of week */}
-      <div className='grid grid-cols-7 gap-1 mb-2'>
+      <div className='mb-2 grid grid-cols-7 gap-1'>
         {DAYS.map((day) => (
           <div
             key={day}
-            className='text-center text-xs font-medium text-muted-foreground h-8 flex items-center justify-center'
+            className='flex h-8 items-center justify-center text-center text-xs font-medium text-muted-foreground'
           >
             {day}
           </div>
@@ -135,12 +135,12 @@ export function Calendar({ mode: _mode = 'single', selected, onSelect, disabled,
               onClick={() => handleDateClick(date)}
               disabled={isDisabled}
               className={cn(
-                'h-8 w-8 text-sm rounded-md flex items-center justify-center transition-colors',
+                'flex h-8 w-8 items-center justify-center rounded-md text-sm transition-colors',
                 'hover:bg-accent hover:text-accent-foreground',
                 'focus:outline-none',
                 selected && 'bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground',
                 today && !selected && 'border border-primary',
-                isDisabled && 'opacity-50 cursor-not-allowed hover:bg-transparent',
+                isDisabled && 'cursor-not-allowed opacity-50 hover:bg-transparent',
               )}
             >
               {date.getDate()}

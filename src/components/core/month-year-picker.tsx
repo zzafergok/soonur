@@ -145,7 +145,7 @@ export function MonthYearPicker({
         <Button
           variant='outline'
           className={cn(
-            'w-full justify-start text-left font-normal h-10 px-3 py-2',
+            'h-10 w-full justify-start px-3 py-2 text-left font-normal',
             !value && 'text-muted-foreground',
             error && 'border-red-500 focus:border-red-500 focus:ring-red-500',
             'hover:bg-gray-50 dark:hover:bg-gray-800/50',
@@ -158,18 +158,18 @@ export function MonthYearPicker({
           <span className='truncate'>{displayValue}</span>
           {clearable && value && !disabled && (
             <X
-              className='ml-auto h-4 w-4 shrink-0 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors'
+              className='ml-auto h-4 w-4 shrink-0 text-gray-400 transition-colors hover:text-gray-600 dark:hover:text-gray-300'
               onClick={handleClear}
             />
           )}
         </Button>
       </PopoverTrigger>
 
-      <PopoverContent className='w-auto p-0 shadow-lg border border-gray-200 dark:border-gray-700' align='start'>
+      <PopoverContent className='w-auto border border-gray-200 p-0 shadow-lg dark:border-gray-700' align='start'>
         <div className='flex'>
           {/* Quick dates sidebar */}
-          <div className='border-r border-gray-200 dark:border-gray-700 p-3 min-w-[120px]'>
-            <div className='text-xs font-medium text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wide'>
+          <div className='min-w-[120px] border-r border-gray-200 p-3 dark:border-gray-700'>
+            <div className='mb-2 text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400'>
               Hızlı Seçim
             </div>
             <div className='space-y-1'>
@@ -178,7 +178,7 @@ export function MonthYearPicker({
                   key={index}
                   variant='ghost'
                   size='sm'
-                  className='w-full justify-start h-8 px-2 text-xs font-normal hover:bg-blue-50 dark:hover:bg-blue-900/20'
+                  className='h-8 w-full justify-start px-2 text-xs font-normal hover:bg-blue-50 dark:hover:bg-blue-900/20'
                   onClick={() => handleQuickDateSelect(quickDate)}
                 >
                   {quickDate.label}
@@ -188,9 +188,9 @@ export function MonthYearPicker({
           </div>
 
           {/* Month/Year picker */}
-          <div className='p-3 min-w-[280px]'>
+          <div className='min-w-[280px] p-3'>
             {/* Year navigation */}
-            <div className='flex items-center justify-between mb-4'>
+            <div className='mb-4 flex items-center justify-between'>
               <Button
                 variant='ghost'
                 size='sm'
@@ -200,7 +200,7 @@ export function MonthYearPicker({
                 <ChevronLeft className='h-4 w-4' />
               </Button>
 
-              <div className='text-lg font-semibold text-gray-900 dark:text-gray-100 min-w-[80px] text-center'>
+              <div className='min-w-[80px] text-center text-lg font-semibold text-gray-900 dark:text-gray-100'>
                 {currentYear}
               </div>
 
@@ -227,20 +227,20 @@ export function MonthYearPicker({
                     variant='ghost'
                     size='sm'
                     className={cn(
-                      'h-10 px-3 text-sm font-normal relative flex items-center justify-center',
-                      'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800',
+                      'relative flex h-10 items-center justify-center px-3 text-sm font-normal',
+                      'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800',
                       selected && 'bg-blue-600 text-white hover:bg-blue-700',
                       current &&
                         !selected &&
-                        'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-semibold',
-                      disabled && 'opacity-50 cursor-not-allowed',
+                        'bg-blue-50 font-semibold text-blue-600 dark:bg-blue-900/20 dark:text-blue-400',
+                      disabled && 'cursor-not-allowed opacity-50',
                     )}
                     onClick={() => !disabled && handleMonthSelect(index)}
                     disabled={disabled}
                   >
                     {month}
                     {current && !selected && (
-                      <div className='absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-blue-600 dark:bg-blue-400 rounded-full' />
+                      <div className='absolute -bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 transform rounded-full bg-blue-600 dark:bg-blue-400' />
                     )}
                   </Button>
                 )
@@ -248,7 +248,7 @@ export function MonthYearPicker({
             </div>
 
             {/* Footer */}
-            <div className='flex items-center justify-between mt-4 pt-3 border-t border-gray-200 dark:border-gray-700'>
+            <div className='mt-4 flex items-center justify-between border-t border-gray-200 pt-3 dark:border-gray-700'>
               <div className='text-xs text-gray-500 dark:text-gray-400'>
                 {value ? displayValue : 'Ay/Yıl seçilmedi'}
               </div>

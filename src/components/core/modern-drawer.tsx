@@ -123,7 +123,7 @@ export function ModernDrawer({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className='fixed inset-0 z-[9998] bg-black/50 backdrop-blur-sm hidden sm:block m-0 p-0'
+            className='fixed inset-0 z-[9998] m-0 hidden bg-black/50 p-0 backdrop-blur-sm sm:block'
             style={{ margin: 0, padding: 0 }}
             onClick={maskClosable ? () => onOpenChange(false) : undefined}
           />
@@ -138,7 +138,7 @@ export function ModernDrawer({
               mass: 0.8,
             }}
             className={cn(
-              'fixed z-[9999] flex flex-col bg-background border shadow-2xl',
+              'fixed z-[9999] flex flex-col border bg-background shadow-2xl',
               'rounded-none sm:rounded-lg', // No border radius on mobile, 8px on desktop
               'm-0 p-0',
               placementClasses[placement],
@@ -148,14 +148,14 @@ export function ModernDrawer({
           >
             {/* Header */}
             {(title || showCloseButton) && (
-              <div className='flex items-center justify-between p-4 sm:p-6 border-b border-border/50 bg-muted/20'>
-                {title && <h2 className='text-base sm:text-lg font-semibold text-foreground pr-4 truncate'>{title}</h2>}
+              <div className='flex items-center justify-between border-b border-border/50 bg-muted/20 p-4 sm:p-6'>
+                {title && <h2 className='truncate pr-4 text-base font-semibold text-foreground sm:text-lg'>{title}</h2>}
                 {showCloseButton && (
                   <Button
                     variant='ghost'
                     size='sm'
                     onClick={() => onOpenChange(false)}
-                    className='h-8 w-8 p-0 rounded-md hover:bg-muted/80 flex-shrink-0'
+                    className='h-8 w-8 flex-shrink-0 rounded-md p-0 hover:bg-muted/80'
                   >
                     <X className='h-4 w-4' />
                     <span className='sr-only'>Close drawer</span>

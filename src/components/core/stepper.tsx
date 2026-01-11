@@ -49,14 +49,14 @@ export function StepperItem({ step = 1, title, description, isActive, isComplete
       <div className='flex flex-col items-center'>
         <div
           className={cn(
-            'w-10 h-10 rounded-full border-2 flex items-center justify-center text-sm font-medium transition-colors',
+            'flex h-10 w-10 items-center justify-center rounded-full border-2 text-sm font-medium transition-colors',
             {
-              'bg-primary border-primary text-primary-foreground': isActive || isCompleted,
+              'border-primary bg-primary text-primary-foreground': isActive || isCompleted,
               'border-muted-foreground text-muted-foreground': !isActive && !isCompleted,
             },
           )}
         >
-          {isCompleted ? <Check className='w-5 h-5' /> : step}
+          {isCompleted ? <Check className='h-5 w-5' /> : step}
         </div>
         <div className='mt-2 text-center'>
           <div
@@ -70,7 +70,7 @@ export function StepperItem({ step = 1, title, description, isActive, isComplete
           </div>
           {description && (
             <div
-              className={cn('text-xs mt-1', {
+              className={cn('mt-1 text-xs', {
                 'text-primary/70': isActive,
                 'text-muted-foreground': !isActive,
               })}
@@ -82,7 +82,7 @@ export function StepperItem({ step = 1, title, description, isActive, isComplete
       </div>
       {!isLast && (
         <div
-          className={cn('h-px w-24 mx-4 transition-colors', {
+          className={cn('mx-4 h-px w-24 transition-colors', {
             'bg-primary': isCompleted,
             'bg-muted': !isCompleted,
           })}

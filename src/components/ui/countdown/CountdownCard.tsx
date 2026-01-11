@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
+import Link from 'next/link'
 
 import { Clock, Timer, Hourglass } from 'lucide-react'
 import { differenceInSeconds, intervalToDuration, Duration } from 'date-fns'
@@ -14,9 +15,10 @@ interface CountdownCardProps {
   targetDate: Date
   className?: string
   color?: string
+  href?: string
 }
 
-export function CountdownCard({ title, targetDate, className, color }: CountdownCardProps) {
+export function CountdownCard({ title, targetDate, className, color, href }: CountdownCardProps) {
   const [timeLeft, setTimeLeft] = useState<Duration | null>(null)
   const [isPast, setIsPast] = useState(false)
 
@@ -51,36 +53,36 @@ export function CountdownCard({ title, targetDate, className, color }: Countdown
     return 65
   }
 
-  return (
+  const Content = (
     <Card
       className={cn(
-        'group bg-white rounded-2xl shadow-sm border border-slate-100 hover:shadow-lg transition-all duration-300 p-6',
+        'group rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition-all duration-300 hover:shadow-lg',
         className,
       )}
     >
       <div className='flex items-start gap-5'>
         {/* Icon Box */}
         <div
-          className='w-14 h-14 rounded-2xl flex-shrink-0 flex items-center justify-center text-white text-2xl font-bold shadow-sm'
+          className='flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-2xl text-2xl font-bold text-white shadow-sm'
           style={{ backgroundColor: color ? `${color}15` : 'hsl(var(--primary) / 0.1)' }}
         >
           <span style={{ color: color || 'hsl(var(--primary))' }}>{title.charAt(0)}</span>
         </div>
 
         {/* Content Area */}
-        <div className='flex-1 min-w-0'>
+        <div className='min-w-0 flex-1'>
           {/* Header: Title & Arrow */}
-          <div className='flex items-start justify-between mb-1'>
+          <div className='mb-1 flex items-start justify-between'>
             <div>
-              <CardTitle className='font-bold text-lg text-slate-900 group-hover:text-primary transition-colors line-clamp-1'>
+              <CardTitle className='line-clamp-1 text-lg font-bold text-slate-900 transition-colors group-hover:text-primary'>
                 {title}
               </CardTitle>
-              <div className='text-xs font-semibold text-slate-400 mt-1 uppercase tracking-wider'>
+              <div className='mt-1 text-xs font-semibold uppercase tracking-wider text-slate-400'>
                 {isPast ? 'Tamamlandı' : 'Yaklaşıyor'}
               </div>
             </div>
 
-            <div className='w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-primary group-hover:text-white transition-all duration-300 -mr-1'>
+            <div className='-mr-1 flex h-8 w-8 items-center justify-center rounded-full bg-slate-50 text-slate-400 transition-all duration-300 group-hover:bg-primary group-hover:text-white'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
                 width='16'
@@ -91,7 +93,7 @@ export function CountdownCard({ title, targetDate, className, color }: Countdown
                 strokeWidth='2'
                 strokeLinecap='round'
                 strokeLinejoin='round'
-                className='transform group-hover:translate-x-0.5 transition-transform'
+                className='transform transition-transform group-hover:translate-x-0.5'
               >
                 <path d='M5 12h14' />
                 <path d='m12 5 7 7-7 7' />
@@ -100,7 +102,7 @@ export function CountdownCard({ title, targetDate, className, color }: Countdown
           </div>
 
           {/* Date & Days Remaining */}
-          <div className='flex items-end justify-between mt-4 mb-3'>
+          <div className='mb-3 mt-4 flex items-end justify-between'>
             <span className='text-sm font-medium text-slate-500'>
               {targetDate.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}
             </span>
@@ -111,7 +113,7 @@ export function CountdownCard({ title, targetDate, className, color }: Countdown
                   <span className='text-xl font-bold tabular-nums' style={{ color: color || 'hsl(var(--primary))' }}>
                     {timeLeft?.days || 0}
                   </span>
-                  <span className='text-xs font-bold text-slate-400 ml-1'>Gün</span>
+                  <span className='ml-1 text-xs font-bold text-slate-400'>Gün</span>
                 </>
               ) : (
                 <span className='text-sm font-bold text-slate-400'>Süre Doldu</span>
@@ -120,7 +122,7 @@ export function CountdownCard({ title, targetDate, className, color }: Countdown
           </div>
 
           {/* Progress Bar */}
-          <div className='h-1.5 w-full bg-slate-100 rounded-full overflow-hidden'>
+          <div className='h-1.5 w-full overflow-hidden rounded-full bg-slate-100'>
             <div
               className='h-full rounded-full transition-all duration-1000 ease-out'
               style={{
@@ -133,4 +135,14 @@ export function CountdownCard({ title, targetDate, className, color }: Countdown
       </div>
     </Card>
   )
+
+  if (href) {
+    return (
+      <Link href={href} className='block h-full'>
+        {Content}
+      </Link>
+    )
+  }
+
+  return Content
 }

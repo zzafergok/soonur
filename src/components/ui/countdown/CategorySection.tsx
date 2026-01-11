@@ -21,17 +21,17 @@ export interface CategorySectionProps {
 export function CategorySection({ title, slug, events }: CategorySectionProps) {
   return (
     <section className='py-8'>
-      <div className='flex items-center justify-between mb-6'>
-        <h2 className='text-2xl font-bold text-countdown-primary'>{title}</h2>
+      <div className='mb-6 flex items-center justify-between'>
+        <h2 className='text-countdown-primary text-2xl font-bold'>{title}</h2>
         <Link
           href={`/countdown/category/${slug}`}
-          className='flex items-center text-sm font-medium text-countdown-secondary hover:text-countdown-primary transition-colors'
+          className='text-countdown-secondary hover:text-countdown-primary flex items-center text-sm font-medium transition-colors'
         >
           Tümünü Gör <ArrowRight className='ml-1 h-4 w-4' />
         </Link>
       </div>
 
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
+      <div className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4'>
         {events.slice(0, 4).map((event) => (
           <CountdownCard key={event.id} title={event.title} targetDate={event.targetDate} color={event.color} />
         ))}

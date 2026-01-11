@@ -123,16 +123,16 @@ export function DynamicBreadcrumb({ className, separator, homeIcon = true }: Dyn
                 aria-current='page'
                 aria-label={`Şu anki sayfa: ${item.label}`}
               >
-                {item.icon && <item.icon className='h-4 w-4 mr-1 inline' />}
+                {item.icon && <item.icon className='mr-1 inline h-4 w-4' />}
                 {item.label}
               </span>
             ) : (
               <Link
                 href={item.href}
-                className='flex items-center hover:text-foreground transition-colors focus:outline-none rounded-sm px-1'
+                className='flex items-center rounded-sm px-1 transition-colors hover:text-foreground focus:outline-none'
                 aria-label={`${item.label} sayfasına git`}
               >
-                {item.icon && <item.icon className='h-4 w-4 mr-1' />}
+                {item.icon && <item.icon className='mr-1 h-4 w-4' />}
                 {item.label}
               </Link>
             )}

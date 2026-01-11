@@ -14,7 +14,7 @@ export function GlobalBreadcrumb() {
   }
 
   return (
-    <div className='w-full max-w-7xl mx-auto px-4 md:px-8 my-4'>
+    <div className='mx-auto my-4 w-full max-w-7xl px-4 md:px-8'>
       <DynamicBreadcrumb />
     </div>
   )

@@ -130,7 +130,7 @@ export function AccordionItem({ children, value, disabled = false, className }: 
     <div
       data-state={expanded ? 'open' : 'closed'}
       data-disabled={disabled ? 'true' : undefined}
-      className={cn('overflow-hidden transition-all w-full', disabled && 'opacity-50 cursor-not-allowed', className)}
+      className={cn('w-full overflow-hidden transition-all', disabled && 'cursor-not-allowed opacity-50', className)}
     >
       {children}
     </div>
@@ -168,8 +168,8 @@ export function AccordionTrigger({ children, className, hideIcon = false }: Acco
       disabled={disabled}
       aria-expanded={expanded}
       className={cn(
-        'flex items-center justify-between w-full py-4 px-4 text-left text-base font-medium transition-colors',
-        'focus:outline-none focus-visible:ring-1 focus-visible:ring-primary/50 focus-visible:ring-inset',
+        'flex w-full items-center justify-between px-4 py-4 text-left text-base font-medium transition-colors',
+        'focus:outline-none focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-primary/50',
         'hover:bg-neutral-50 dark:hover:bg-neutral-800/50',
         expanded && 'bg-neutral-50 dark:bg-neutral-800/50',
         disabled && 'cursor-not-allowed',
@@ -255,12 +255,12 @@ export const Accordion = {
 // Kullanım örneği
 export function AccordionExample() {
   return (
-    <div className='p-6 max-w-md mx-auto'>
-      <h2 className='text-lg font-medium mb-4'>Accordion Örneği</h2>
+    <div className='mx-auto max-w-md p-6'>
+      <h2 className='mb-4 text-lg font-medium'>Accordion Örneği</h2>
 
       <Accordion.Root
         defaultValue={['item-1']}
-        className='border rounded-lg border-neutral-200 dark:border-neutral-700'
+        className='rounded-lg border border-neutral-200 dark:border-neutral-700'
       >
         <Accordion.Item value='item-1'>
           <Accordion.Trigger>Accordion Item 1</Accordion.Trigger>
@@ -287,7 +287,7 @@ export function AccordionExample() {
               Üçüncü accordion öğesinin içeriği. İsterseniz burada resim, liste veya başka bileşenler de
               kullanabilirsiniz.
             </p>
-            <div className='mt-2 p-2 bg-primary-50 dark:bg-primary-900/20 rounded'>
+            <div className='mt-2 rounded bg-primary-50 p-2 dark:bg-primary-900/20'>
               <p className='text-xs'>Örnek bir vurgulanmış alan</p>
             </div>
           </Accordion.Content>

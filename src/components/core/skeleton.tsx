@@ -94,7 +94,7 @@ SkeletonButton.displayName = 'SkeletonButton'
 
 export const SkeletonCard = React.forwardRef<HTMLDivElement, Omit<SkeletonProps, 'variant'>>(
   ({ className, children, ...props }, ref) => (
-    <div ref={ref} className={cn('p-6 space-y-4', className)} {...props}>
+    <div ref={ref} className={cn('space-y-4 p-6', className)} {...props}>
       <div className='space-y-2'>
         <Skeleton variant='text' width='60%' height={20} />
         <Skeleton variant='text' lines={2} height={16} />
@@ -102,7 +102,7 @@ export const SkeletonCard = React.forwardRef<HTMLDivElement, Omit<SkeletonProps,
       <Skeleton variant='rectangular' width='100%' height={200} />
       <div className='flex items-center space-x-4'>
         <SkeletonAvatar size={32} />
-        <div className='space-y-1 flex-1'>
+        <div className='flex-1 space-y-1'>
           <Skeleton variant='text' width='40%' height={14} />
           <Skeleton variant='text' width='60%' height={12} />
         </div>
@@ -119,8 +119,8 @@ export function SkeletonExample() {
   return (
     <div className='space-y-8 p-6'>
       <div>
-        <h3 className='text-lg font-medium mb-4'>Temel Skeleton Tipleri</h3>
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
+        <h3 className='mb-4 text-lg font-medium'>Temel Skeleton Tipleri</h3>
+        <div className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4'>
           <div className='space-y-3'>
             <h4 className='text-sm font-medium text-neutral-600 dark:text-neutral-400'>Text</h4>
             <SkeletonText lines={3} />
@@ -153,8 +153,8 @@ export function SkeletonExample() {
       </div>
 
       <div>
-        <h3 className='text-lg font-medium mb-4'>Animation Tipleri</h3>
-        <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+        <h3 className='mb-4 text-lg font-medium'>Animation Tipleri</h3>
+        <div className='grid grid-cols-1 gap-6 md:grid-cols-3'>
           <div className='space-y-2'>
             <h4 className='text-sm font-medium text-neutral-600 dark:text-neutral-400'>Pulse</h4>
             <Skeleton animation='pulse' width='100%' height={40} />
@@ -173,9 +173,9 @@ export function SkeletonExample() {
       </div>
 
       <div>
-        <h3 className='text-lg font-medium mb-4'>Kart Örneği</h3>
+        <h3 className='mb-4 text-lg font-medium'>Kart Örneği</h3>
         <div className='max-w-md'>
-          <SkeletonCard className='border border-neutral-200 dark:border-neutral-800 rounded-lg' />
+          <SkeletonCard className='rounded-lg border border-neutral-200 dark:border-neutral-800' />
         </div>
       </div>
     </div>

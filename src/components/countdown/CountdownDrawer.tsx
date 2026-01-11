@@ -1,7 +1,10 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 
+import * as z from 'zod'
+import { useForm, Controller } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { Pencil, GraduationCap, Calendar, Clock, CheckCircle, Check, PartyPopper } from 'lucide-react'
 
 import { Input } from '@/components/core/input'
@@ -36,6 +39,20 @@ type EventType = (typeof EVENT_TYPES)[number]['id']
 
 const COLORS = ['hsl(var(--primary))', '#3b82f6', '#ef4444', '#f59e0b', '#a855f7', '#6b7280'] as const
 
+// Form Schema
+const formSchema = z.object({
+  title: z.string().min(1, 'Etkinlik adı zorunludur'),
+  targetDate: z.date({
+    required_error: 'Tarih ve saat seçimi zorunludur',
+    invalid_type_error: 'Geçersiz tarih formatı',
+  }),
+  type: z.enum(['exam', 'application_start', 'application_end', 'result', 'holiday'] as const),
+  color: z.string(),
+  notes: z.string().optional(),
+})
+
+type FormValues = z.infer<typeof formSchema>
+
 export function CountdownDrawer({
   open,
   onOpenChange,
@@ -44,44 +61,47 @@ export function CountdownDrawer({
   onUpdate,
   onSuccess,
 }: CountdownDrawerProps) {
-  const [title, setTitle] = useState('')
-  const [notes, setNotes] = useState('')
-  const [targetDate, setTargetDate] = useState<Date | null>(null)
-  const [color, setColor] = useState<string>(COLORS[0])
-  const [eventType, setEventType] = useState<EventType>('exam')
+  const form = useForm<FormValues>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      title: '',
+      type: 'exam',
+      color: COLORS[0],
+      notes: '',
+    },
+  })
 
-  // Populate form when editing
+  // Populate form when editing or reset when opening new
   useEffect(() => {
-    if (editEvent) {
-      setTitle(editEvent.title)
-      setTargetDate(new Date(editEvent.targetDate))
-      setEventType(editEvent.type || 'exam')
-      setColor(editEvent.color)
-      setNotes(editEvent.notes || '')
-    } else {
-      // Reset form for new entry
-      setTitle('')
-      setTargetDate(null)
-      setEventType('exam')
-      setColor(COLORS[0])
-      setNotes('')
+    if (open) {
+      if (editEvent) {
+        form.reset({
+          title: editEvent.title,
+          targetDate: new Date(editEvent.targetDate),
+          type: (editEvent.type as EventType) || 'exam',
+          color: editEvent.color,
+          notes: editEvent.notes || '',
+        })
+      } else {
+        form.reset({
+          title: '',
+          targetDate: undefined,
+          type: 'exam',
+          color: COLORS[0],
+          notes: '',
+        })
+      }
     }
-  }, [editEvent, open])
+  }, [editEvent, open, form])
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-
-    if (!title.trim() || !targetDate) {
-      return
-    }
-
+  const handleSubmit = (values: FormValues) => {
     const data = {
-      title: title.trim(),
-      targetDate: targetDate.toISOString(),
-      color,
+      title: values.title.trim(),
+      targetDate: values.targetDate.toISOString(),
+      color: values.color,
       priority: 1,
-      type: eventType,
-      notes: notes.trim() || undefined,
+      type: values.type,
+      notes: values.notes?.trim() || undefined,
     }
 
     if (editEvent && onUpdate) {
@@ -97,8 +117,6 @@ export function CountdownDrawer({
     }
   }
 
-  const isValid = title.trim() && targetDate
-
   return (
     <ModernDrawer
       open={open}
@@ -108,147 +126,188 @@ export function CountdownDrawer({
       title={editEvent ? 'Geri Sayımı Düzenle' : 'Yeni Geri Sayım'}
       className='bg-white'
     >
-      <form onSubmit={handleSubmit} className='flex flex-col h-full'>
+      <form onSubmit={form.handleSubmit(handleSubmit)} className='flex h-full flex-col'>
         <div className='flex-1 space-y-6'>
           {/* Description */}
           <p className='text-sm text-gray-500'>Takviminize yeni bir etkinlik ekleyin.</p>
 
           {/* Event Title */}
           <div className='space-y-2'>
-            <label className='text-sm font-medium text-gray-900'>Etkinlik Adı</label>
+            <label className='text-sm font-medium text-gray-900'>
+              Etkinlik Adı <span className='text-red-500'>*</span>
+            </label>
             <div className='relative'>
-              <Pencil className='absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 z-10' />
-              <Input
-                type='text'
-                placeholder='Örn: KPSS 2024'
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                className='pl-10 bg-gray-50 border-gray-200 focus:border-primary transition-all'
+              <Pencil className='absolute left-3 top-1/2 z-10 h-4 w-4 -translate-y-1/2 text-gray-400' />
+              <Controller
+                name='title'
+                control={form.control}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    type='text'
+                    placeholder='Örn: KPSS 2024'
+                    className={cn(
+                      'border-gray-200 bg-gray-50 pl-10 transition-all focus:border-primary',
+                      form.formState.errors.title && 'border-red-500 focus:border-red-500',
+                    )}
+                  />
+                )}
               />
             </div>
+            {form.formState.errors.title && (
+              <p className='text-xs text-red-500'>{form.formState.errors.title.message}</p>
+            )}
           </div>
 
           {/* Date and Time */}
           <div className='space-y-2'>
-            <label className='text-sm font-medium text-gray-900'>Tarih ve Saat</label>
-            <ModernDatePicker
-              value={targetDate}
-              onChange={setTargetDate}
-              placeholder='Tarih ve saat seçin'
-              includeTime={true}
-              minDate={new Date()}
-              showQuickSelect={false}
-              className='w-full'
+            <label className='text-sm font-medium text-gray-900'>
+              Tarih ve Saat <span className='text-red-500'>*</span>
+            </label>
+            <Controller
+              name='targetDate'
+              control={form.control}
+              render={({ field }) => (
+                <ModernDatePicker
+                  value={field.value}
+                  onChange={field.onChange}
+                  placeholder='Tarih ve saat seçin'
+                  includeTime={true}
+                  minDate={new Date()}
+                  showQuickSelect={false}
+                  className={cn('w-full', form.formState.errors.targetDate && 'border-red-500 ring-red-500')}
+                />
+              )}
             />
+            {form.formState.errors.targetDate && (
+              <p className='text-xs text-red-500'>{form.formState.errors.targetDate.message}</p>
+            )}
           </div>
 
           {/* Event Type Selection */}
           <div className='space-y-2'>
             <label className='text-sm font-medium text-gray-900'>Etkinlik Türü</label>
-            <div className='grid grid-cols-1 gap-3'>
-              {EVENT_TYPES.map((type) => {
-                const Icon = type.icon
-                const isSelected = eventType === type.id
-                return (
-                  <Button
-                    key={type.id}
-                    type='button'
-                    variant='ghost'
-                    onClick={() => setEventType(type.id)}
-                    className={cn(
-                      'flex items-center justify-start gap-4 p-4 h-auto rounded-xl border transition-all duration-200 group relative overflow-hidden',
-                      isSelected
-                        ? 'border-primary bg-primary text-white shadow-md'
-                        : 'border-gray-200 bg-white hover:border-primary/50 hover:bg-primary/5 hover:shadow-sm text-gray-700',
-                    )}
-                  >
-                    <div
-                      className={cn(
-                        'w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors',
-                        isSelected ? 'bg-white' : 'bg-gray-50 group-hover:bg-white',
-                      )}
-                    >
-                      <Icon
+            <Controller
+              name='type'
+              control={form.control}
+              render={({ field }) => (
+                <div className='grid grid-cols-1 gap-3'>
+                  {EVENT_TYPES.map((type) => {
+                    const Icon = type.icon
+                    const isSelected = field.value === type.id
+                    return (
+                      <Button
+                        key={type.id}
+                        type='button'
+                        variant='ghost'
+                        onClick={() => field.onChange(type.id)}
                         className={cn(
-                          'w-6 h-6 transition-colors',
-                          isSelected ? 'text-primary' : 'text-gray-500 group-hover:text-primary',
+                          'group relative flex h-auto items-center justify-start gap-4 overflow-hidden rounded-xl border p-4 transition-all duration-200',
+                          isSelected
+                            ? 'border-primary bg-primary text-white shadow-md'
+                            : 'border-gray-200 bg-white text-gray-700 hover:border-primary/50 hover:bg-primary/5 hover:shadow-sm',
                         )}
-                      />
-                    </div>
-                    <div className='flex flex-col items-start gap-1'>
-                      <span className={cn('font-semibold text-base', isSelected ? 'text-white' : 'text-gray-900')}>
-                        {type.label}
-                      </span>
-                      {isSelected && (
-                        <span className='text-xs text-white/90 font-medium animate-in fade-in slide-in-from-left-1'>
-                          Seçildi
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Selection Indicator */}
-                    {isSelected && (
-                      <div className='absolute right-4 top-1/2 -translate-y-1/2'>
-                        <div className='w-6 h-6 rounded-full bg-white flex items-center justify-center animate-in zoom-in'>
-                          <Check className='w-3.5 h-3.5 text-primary' />
+                      >
+                        <div
+                          className={cn(
+                            'flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl transition-colors',
+                            isSelected ? 'bg-white' : 'bg-gray-50 group-hover:bg-white',
+                          )}
+                        >
+                          <Icon
+                            className={cn(
+                              'h-6 w-6 transition-colors',
+                              isSelected ? 'text-primary' : 'text-gray-500 group-hover:text-primary',
+                            )}
+                          />
                         </div>
-                      </div>
-                    )}
-                  </Button>
-                )
-              })}
-            </div>
+                        <div className='flex flex-col items-start gap-1'>
+                          <span className={cn('text-base font-semibold', isSelected ? 'text-white' : 'text-gray-900')}>
+                            {type.label}
+                          </span>
+                          {isSelected && (
+                            <span className='animate-in fade-in slide-in-from-left-1 text-xs font-medium text-white/90'>
+                              Seçildi
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Selection Indicator */}
+                        {isSelected && (
+                          <div className='absolute right-4 top-1/2 -translate-y-1/2'>
+                            <div className='animate-in zoom-in flex h-6 w-6 items-center justify-center rounded-full bg-white'>
+                              <Check className='h-3.5 w-3.5 text-primary' />
+                            </div>
+                          </div>
+                        )}
+                      </Button>
+                    )
+                  })}
+                </div>
+              )}
+            />
           </div>
 
           {/* Color Theme */}
           <div className='space-y-2'>
             <label className='text-sm font-medium text-gray-900'>Renk Teması</label>
-            <div className='flex gap-3'>
-              {COLORS.map((c) => (
-                <button
-                  key={c}
-                  type='button'
-                  onClick={() => setColor(c)}
-                  className={cn(
-                    'w-10 h-10 rounded-full flex items-center justify-center transition-transform',
-                    color === c ? 'ring-2 ring-offset-2 scale-110' : 'hover:scale-105',
-                  )}
-                  style={
-                    {
-                      backgroundColor: c,
-                      '--tw-ring-color': c,
-                    } as React.CSSProperties
-                  }
-                >
-                  {color === c && <Check className='w-5 h-5 text-white' />}
-                </button>
-              ))}
-            </div>
+            <Controller
+              name='color'
+              control={form.control}
+              render={({ field }) => (
+                <div className='flex gap-3'>
+                  {COLORS.map((c) => (
+                    <button
+                      key={c}
+                      type='button'
+                      onClick={() => field.onChange(c)}
+                      className={cn(
+                        'flex h-10 w-10 items-center justify-center rounded-full transition-transform',
+                        field.value === c ? 'scale-110 ring-2 ring-offset-2' : 'hover:scale-105',
+                      )}
+                      style={
+                        {
+                          backgroundColor: c,
+                          '--tw-ring-color': c,
+                        } as React.CSSProperties
+                      }
+                    >
+                      {field.value === c && <Check className='h-5 w-5 text-white' />}
+                    </button>
+                  ))}
+                </div>
+              )}
+            />
           </div>
 
           {/* Notes - Using Textarea component */}
           <div className='space-y-2'>
             <label className='text-sm font-medium text-gray-900'>
-              Notlar <span className='text-gray-400 font-normal'>(İsteğe Bağlı)</span>
+              Notlar <span className='font-normal text-gray-400'>(İsteğe Bağlı)</span>
             </label>
-            <Textarea
-              placeholder='Bu geri sayım için kısa bir açıklama ekleyin...'
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-              rows={3}
-              className='bg-gray-50 border-gray-200 resize-none'
+            <Controller
+              name='notes'
+              control={form.control}
+              render={({ field }) => (
+                <Textarea
+                  {...field}
+                  placeholder='Bu geri sayım için kısa bir açıklama ekleyin...'
+                  rows={3}
+                  className='resize-none border-gray-200 bg-gray-50'
+                />
+              )}
             />
           </div>
         </div>
 
         {/* Footer Actions */}
-        <div className='mt-6 pt-4 border-t border-gray-100 space-y-3'>
+        <div className='mt-6 space-y-3 border-t border-gray-100 pt-4'>
           <Button
             type='submit'
-            disabled={!isValid}
-            className='w-full bg-primary hover:bg-primary/90 text-primary-foreground py-3 rounded-xl font-semibold'
+            disabled={!form.formState.isValid || form.formState.isSubmitting}
+            className='w-full rounded-xl bg-primary py-3 font-semibold text-primary-foreground hover:bg-primary/90'
           >
-            <Check className='w-5 h-5 mr-2' />
+            <Check className='mr-2 h-5 w-5' />
             {editEvent ? 'Değişiklikleri Kaydet' : 'Geri Sayım Oluştur'}
           </Button>
           <Button type='button' variant='ghost' onClick={() => onOpenChange(false)} className='w-full'>

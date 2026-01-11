@@ -179,7 +179,7 @@ export function ModernDatePicker({
         <Button
           variant='outline'
           className={cn(
-            'w-full justify-start text-left font-normal h-10 px-3 py-2',
+            'h-10 w-full justify-start px-3 py-2 text-left font-normal',
             !value && 'text-muted-foreground',
             error && 'border-red-500 focus:border-red-500',
             'hover:bg-gray-50 dark:hover:bg-gray-800/50',
@@ -192,7 +192,7 @@ export function ModernDatePicker({
           <span className='truncate'>{displayValue}</span>
           {clearable && value && !disabled && (
             <X
-              className='ml-auto h-4 w-4 shrink-0 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors'
+              className='ml-auto h-4 w-4 shrink-0 text-gray-400 transition-colors hover:text-gray-600 dark:hover:text-gray-300'
               onClick={handleClear}
             />
           )}
@@ -200,23 +200,23 @@ export function ModernDatePicker({
       </PopoverTrigger>
 
       <PopoverContent
-        className='w-auto p-0 shadow-lg border border-gray-200 dark:border-gray-700 z-[10001]'
+        className='z-[10001] w-auto border border-gray-200 p-0 shadow-lg dark:border-gray-700'
         align='start'
       >
         <div className='flex flex-col sm:flex-row'>
           {/* Quick dates sidebar */}
           {showQuickSelect && (
-            <div className='border-b sm:border-b-0 sm:border-r border-gray-200 dark:border-gray-700 p-3 max-w-full sm:max-w-[100px] flex sm:flex-col gap-2 overflow-x-auto sm:overflow-visible'>
-              <div className='text-xs font-medium text-gray-500 dark:text-gray-400 mb-0 sm:mb-2 uppercase tracking-wide hidden sm:block'>
+            <div className='flex max-w-full gap-2 overflow-x-auto border-b border-gray-200 p-3 dark:border-gray-700 sm:max-w-[100px] sm:flex-col sm:overflow-visible sm:border-b-0 sm:border-r'>
+              <div className='mb-0 hidden text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400 sm:mb-2 sm:block'>
                 Hızlı Seçim
               </div>
-              <div className='flex sm:flex-col gap-1'>
+              <div className='flex gap-1 sm:flex-col'>
                 {QUICK_DATES.map((quickDate, index) => (
                   <Button
                     key={index}
                     variant='ghost'
                     size='sm'
-                    className='justify-center sm:justify-start h-8 px-2 text-xs font-normal hover:bg-primary/5 dark:hover:bg-primary/20 whitespace-nowrap'
+                    className='h-8 justify-center whitespace-nowrap px-2 text-xs font-normal hover:bg-primary/5 dark:hover:bg-primary/20 sm:justify-start'
                     onClick={() => handleQuickDateSelect(quickDate)}
                   >
                     {quickDate.label}
@@ -229,7 +229,7 @@ export function ModernDatePicker({
           {/* Calendar */}
           <div className='p-3'>
             {/* Calendar header */}
-            <div className='flex items-center justify-between mb-4'>
+            <div className='mb-4 flex items-center justify-between'>
               <Button
                 variant='ghost'
                 size='sm'
@@ -239,7 +239,7 @@ export function ModernDatePicker({
                 <ChevronLeft className='h-4 w-4' />
               </Button>
 
-              <div className='text-sm font-semibold text-gray-900 dark:text-gray-100 min-w-[120px] text-center'>
+              <div className='min-w-[120px] text-center text-sm font-semibold text-gray-900 dark:text-gray-100'>
                 {MONTHS[currentMonth]} {currentYear}
               </div>
 
@@ -254,11 +254,11 @@ export function ModernDatePicker({
             </div>
 
             {/* Days header */}
-            <div className='grid grid-cols-7 gap-1 mb-2'>
+            <div className='mb-2 grid grid-cols-7 gap-1'>
               {DAYS.map((day) => (
                 <div
                   key={day}
-                  className='h-8 flex items-center justify-center text-xs font-medium text-gray-500 dark:text-gray-400'
+                  className='flex h-8 items-center justify-center text-xs font-medium text-gray-500 dark:text-gray-400'
                 >
                   {day}
                 </div>
@@ -279,16 +279,16 @@ export function ModernDatePicker({
                     variant='ghost'
                     size='sm'
                     className={cn(
-                      'h-8 w-8 p-0 text-sm font-normal relative',
+                      'relative h-8 w-8 p-0 text-sm font-normal',
                       !currentMonthDate && 'text-gray-300 dark:text-gray-600',
                       currentMonthDate &&
                         !selected &&
-                        'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-100',
+                        'text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-gray-100',
                       selected && 'bg-primary text-primary-foreground hover:bg-primary/90',
                       today &&
                         !selected &&
-                        'bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary font-semibold',
-                      disabled && 'opacity-50 cursor-not-allowed',
+                        'bg-primary/10 font-semibold text-primary dark:bg-primary/20 dark:text-primary',
+                      disabled && 'cursor-not-allowed opacity-50',
                     )}
                     onClick={() => {
                       if (!disabled) {
@@ -313,7 +313,7 @@ export function ModernDatePicker({
                   >
                     {date.getDate()}
                     {today && !selected && (
-                      <div className='absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-primary dark:bg-primary rounded-full' />
+                      <div className='absolute -bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 transform rounded-full bg-primary dark:bg-primary' />
                     )}
                   </Button>
                 )
@@ -322,10 +322,10 @@ export function ModernDatePicker({
 
             {/* Time Selection */}
             {includeTime && (
-              <div className='mt-4 pt-3 border-t border-gray-100 dark:border-gray-700'>
-                <div className='flex items-center gap-2 mb-2'>
-                  <Clock className='w-4 h-4 text-gray-500' />
-                  <span className='text-xs font-semibold text-gray-500 uppercase'>Saat Seçimi</span>
+              <div className='mt-4 border-t border-gray-100 pt-3 dark:border-gray-700'>
+                <div className='mb-2 flex items-center gap-2'>
+                  <Clock className='h-4 w-4 text-gray-500' />
+                  <span className='text-xs font-semibold uppercase text-gray-500'>Saat Seçimi</span>
                 </div>
                 <div className='flex items-center gap-2'>
                   <Select
@@ -375,7 +375,7 @@ export function ModernDatePicker({
             )}
 
             {/* Footer */}
-            <div className='flex items-center justify-between mt-4 pt-3 border-t border-gray-200 dark:border-gray-700'>
+            <div className='mt-4 flex items-center justify-between border-t border-gray-200 pt-3 dark:border-gray-700'>
               <div className='text-xs text-gray-500 dark:text-gray-400'>
                 {value
                   ? value.toLocaleDateString('tr-TR', includeTime ? { hour: '2-digit', minute: '2-digit' } : undefined)

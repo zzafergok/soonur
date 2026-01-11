@@ -404,7 +404,7 @@ export function EnhancedSearchFilters({
       <div className='flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between'>
         {/* Search */}
         {showSearch && (
-          <div className='relative flex-1 max-w-md'>
+          <div className='relative max-w-md flex-1'>
             <Search className='absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground' />
             <Input
               placeholder={searchPlaceholder}
@@ -431,7 +431,7 @@ export function EnhancedSearchFilters({
               size={size === 'small' ? 'sm' : 'default'}
               onClick={() => setIsCollapsed(!isCollapsed)}
             >
-              <Filter className='h-4 w-4 mr-2' />
+              <Filter className='mr-2 h-4 w-4' />
               {isCollapsed ? 'Show Filters' : 'Hide Filters'}
             </Button>
           )}
@@ -439,7 +439,7 @@ export function EnhancedSearchFilters({
           {/* Clear All */}
           {showClearAll && (activeFilterCount > 0 || searchText) && (
             <Button variant='outline' size={size === 'small' ? 'sm' : 'default'} onClick={handleClearAll}>
-              <X className='h-4 w-4 mr-2' />
+              <X className='mr-2 h-4 w-4' />
               Clear All
             </Button>
           )}
@@ -448,7 +448,7 @@ export function EnhancedSearchFilters({
 
       {/* Filters */}
       {(!collapsible || !isCollapsed) && (
-        <div className={cn('border rounded-lg p-4 space-y-4', maxHeight && 'overflow-auto')} style={{ maxHeight }}>
+        <div className={cn('space-y-4 rounded-lg border p-4', maxHeight && 'overflow-auto')} style={{ maxHeight }}>
           {/* Standalone Fields */}
           {fields.length > 0 && <div className={getLayoutClasses()}>{fields.map(renderFilterField)}</div>}
 
